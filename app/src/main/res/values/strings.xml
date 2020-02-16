@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">EventLookup</string>
+    <string name="account_icon_string">Account</string>
+    <string name="event_icon_string">Events</string>
+    <string name="more_icon_string">More</string>
+    <string name="event_lookup_image_desc">EventLookup app image</string>
+    <string name="event_title">Event title</string>
+    <string name="event_short_desc">Event short description</string>
+    <string name="event_desc">
+        Event description. This gonna be a long text about event. Some organizator should write some creative thing.
+
+        Some text would be great actually, but as usual there is no time for long talks, just some really really pep talks.
+
+        Though in this case I think it is affordable to write some more text cuz testing is key to proper error-less design.
+    </string>
+    <string name="event_location">Event location</string>
+    <string name="event_date">Event date</string>
+    <string name="event_upcoming_events">Upcoming Events</string>
+    <string name="event_finished_events">Finished events</string>
+    <string name="event_directions">Directions</string>
+    <string name="event_weathers">Weather forecast</string>
+    <string name="event_ticket">Tickets</string>
+    <string name="event_overview">Overview</string>
+    <string name="event_directions_button_search">Search</string>
+    <string name="event_directions_et_address_hint">Type address</string>
+    <string name="in_progress">This screen is underconstruction...</string>
+    <string name="apologize">Sorry,</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

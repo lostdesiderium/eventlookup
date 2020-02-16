@@ -1,0 +1,20 @@
+Back'as su asp.NET CORE (C#)
+Front'as su Android Studio(Java)
+
+Kurti renginius ir juos skelbti. 
+Registruoti vartotojai gali sukurti ir paskelbti renginį, reikia suvesti jo lokaciją ir laiką, pridėti nuotraukas, aprašymą, nuorodą į bilietų pirkimą (jei tokie yra). 
+Vartotojas prisijungęs mato įvairius renginius ant pagrindinės sienos. Galima užsidėti filtrą kokiu atstumu rodyti paskelbtus renginius. Gali matyti savo sukurtus renginius. 
+Paspaudus ant renginio rodoma jo veiksmo vieta, rodoma kaip nusigauti iki tos vietos nuo dabartinės vartotojo (arba galima suvesti nuo kokios), iš orų API (nuorodos į API žemiau) gaunami tos lokacijos ir dienos numatomi orai. 
+	Viskas parodoma vienoje programėlėje per kelis langus.
+Vedamos renginių statistikos tiek vartotojų (jeigu registravosi) kuriuose dalyvavo tiek renginių kurėjų kuriuos sukūrė.
+Rodyti kiek žmonių pažymėjo, kad eis į renginį ir kiek susidomėjusių
+Vartotojas turi profilį, kuriame įkeliama nuotrauka, rodoma keliuose renginiuose dalyvavo/sukūrė, gali prisidėti aprašymą.
+Paskyros valdymas (kaip slaptažodžio keitimas, priminimas).
+Push notification'ai apie artėjančius renginius.  
+
+
+Registracija
+Prisijungimas
+Slaptažodžio priminimas
+	Slaptažodžio keitimas
+Sesijos tokenas

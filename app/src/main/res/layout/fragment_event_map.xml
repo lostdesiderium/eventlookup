@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context=".Event.EventMapFragment">
+
+    <fragment
+        android:id="@+id/mapView"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        />
+
+
+    <EditText
+        android:id="@+id/ET_event_directions_address"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_marginStart="@dimen/default_margin_from_parent"
+        android:layout_marginTop="@dimen/default_margin_from_parent"
+        android:layout_marginEnd="@dimen/default_margin_from_parent"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="@string/event_directions_et_address_hint"
+        android:inputType="textMultiLine"
+        />
+
+    <Button
+        android:id="@+id/event_direction_search"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="@dimen/default_margin_from_parent"
+        android:layout_marginTop="@dimen/close_margin_from_view"
+        android:layout_marginEnd="@dimen/default_margin_from_parent"
+        android:text="@string/event_directions_button_search"
+        style="@style/Widget.AppCompat.Button.Colored"
+
+        />
+
+</LinearLayout>

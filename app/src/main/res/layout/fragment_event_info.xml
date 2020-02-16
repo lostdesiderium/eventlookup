@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="?android:actionBarSize"
+    android:background="@drawable/event_overview_gradient"
+    android:fillViewport="true"
+    android:nestedScrollingEnabled="true"
+    android:weightSum="10"
+    android:orientation="vertical"
+    android:isScrollContainer="true"
+    tools:context=".Event.EventOverviewFragment"
+    >
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/VP_event_overview_slider"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="77dp">
+
+
+    </androidx.viewpager2.widget.ViewPager2>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="?android:actionBarSize"
+        android:layout_weight="6">
+
+        <TextView
+            android:id="@+id/event_overview_title"
+            android:layout_width="345dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin_from_parent"
+            android:layout_marginTop="@dimen/normal_text_view_height"
+            android:text="@string/event_title"
+            android:textColor="@color/colorLightBlack"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/event_overview_description"
+            android:layout_width="349dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin_from_parent"
+            android:layout_marginTop="@dimen/normal_text_view_height"
+            android:text="@string/event_desc"
+            android:textColor="@color/colorLightBlack"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/event_overview_title" />
+
+        <TextView
+            android:id="@+id/event_overview_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin_from_parent"
+            android:layout_marginEnd="@dimen/default_margin_from_parent"
+            android:text="@string/event_location"
+            android:textAlignment="textEnd"
+            android:textColor="@color/colorLightBlack"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/event_overview_description" />
+
+        <TextView
+            android:id="@+id/event_overview_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/close_margin_from_view"
+            android:layout_marginEnd="@dimen/default_margin_from_parent"
+            android:text="@string/event_date"
+            android:textAlignment="textEnd"
+            android:textColor="@color/colorLightBlack"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/event_overview_location" />
+
+        <TextView
+            android:id="@+id/event_overview_interested_ppl_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin_from_parent"
+            android:layout_marginBottom="17dp"
+            android:text="Interested people count"
+            android:textAlignment="viewStart"
+            android:textColor="@color/colorLightBlack"
+            app:layout_constraintBottom_toTopOf="@+id/event_overview_going_ppl_count"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/event_overview_going_ppl_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin_from_parent"
+            android:layout_marginBottom="28dp"
+            android:text="Going people count"
+            android:textAlignment="viewStart"
+            android:textColor="@color/colorLightBlack"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@android:drawable/btn_star"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
