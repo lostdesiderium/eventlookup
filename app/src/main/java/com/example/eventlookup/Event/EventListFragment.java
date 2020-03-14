@@ -1,11 +1,11 @@
 package com.example.eventlookup.Event;
 
-
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +13,36 @@ import android.view.ViewGroup;
 import com.example.eventlookup.Event.Adapters.EventAdapter;
 import com.example.eventlookup.Event.POJOs.EventPOJO;
 import com.example.eventlookup.R;
+import com.example.eventlookup.Shared.AppConf;
+import com.example.eventlookup.Shared.CacheInterceptor;
+import com.example.eventlookup.Shared.MainThreadOkHttpCallback;
 
-import java.util.ArrayList;;
+import java.io.File;
+import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+// With HTTP calls related libs
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Cache;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 
 public class EventListFragment extends Fragment {
@@ -27,8 +50,8 @@ public class EventListFragment extends Fragment {
     RecyclerView recyclerView;
     EventAdapter eventAdapter;
     LinearLayoutManager linearLayoutManager;
-
-
+    private OkHttpClient okHttpClient;
+    private ArrayList<EventPOJO> eventsList;
 
     public EventListFragment(){
         // Required empty constructor
@@ -46,6 +69,8 @@ public class EventListFragment extends Fragment {
         super.onViewCreated( view, savedInstanceState );
 
         recyclerView = view.findViewById( R.id.RVL_events_list );
+        eventsList = new ArrayList<>(  );
+
         setupRecyclerView();
     }
 
@@ -55,53 +80,88 @@ public class EventListFragment extends Fragment {
         recyclerView.setLayoutManager( linearLayoutManager );
         recyclerView.setItemAnimator( new DefaultItemAnimator() );
 
-        eventAdapter = new EventAdapter( );
+        eventAdapter = new EventAdapter(  );
+        eventAdapter.addItems( eventsList );
+        recyclerView.setAdapter( eventAdapter );
+
         fetchDataForAdapter();
+
     }
 
     private void fetchDataForAdapter(){
-
-        // FAKE DATA
-        ArrayList<EventPOJO> eventsList = new ArrayList<>();
-        eventsList.add(new EventPOJO(
-            "https://lh3.googleusercontent.com/proxy/Ee-omx7kHLdt6zJSKeAdtJynt0H6ONDkq4mEIekbHTjc6ZJuFSpg6lpk0WMMak4xomQs9DcDKXfwdRSMZfcMu-ssZdfc0SrToONk0aZqJgV76Gs_0Vl6RpIxaVPaOYKYrLl8K9XuhOZqEHHw",
-            "First fake event",
-"This is a short description of First fake event. Lets begin",
-    "Long description, not used",
-        "Street 1",
-            "2020-02-20"
-        ));
-
-        eventsList.add(new EventPOJO(
-                "https://i.pinimg.com/originals/12/5d/12/125d12f09b112290307bc00e9c38400f.jpg",
-                "Second fake event",
-                "This is a short description of SECOND fake event. Lets begin",
-                "Long description, not used",
-                "Street 2",
-                "2020-03-27"
-        ));
-
-        eventsList.add(new EventPOJO(
-                "https://lh3.googleusercontent.com/proxy/_yc-HIg6CWR_Qr7w_2TV02vabV08Z-5W_yS7B1L-4d0Xqw1yya8j9Xw1bFysftVWi5Q3FBqth2ta1UF-YyRNWN_cIBs8vPQT125Mxj2AcWloSPNGvNhwpipzr8NRfhm-1NiE_0lKsj09K9oYsev30gVwx9feW3Fs9B4L9QggcV3NrSdAgGxRSAJBWKj6N8J20S3KIU38P4Xy1X_x8Q3Za6JX5RrtHtG1Vn7zrvioaqzg-2-jtOp3zS_4GGvxNRBuZeHNACxQ3V5ThDnrEuNvXg_JrZbnd3oLVBaoBsnTt4aSV1U",
-                "Third fake event",
-                "This is a short description of THIRD fake event. Lets begin",
-                "Long description, not used",
-                "Street 3",
-                "2020-04-25"
-        ));
-
-        eventsList.add(new EventPOJO(
-                "https://previews.123rf.com/images/smileus/smileus1612/smileus161200007/69529862-gorgeous-fireworks-on-black-background-ideal-for-new-year-or-other-celebration-events-vertical-forma.jpg",
-                "Fourth fake event",
-                "This is a short description of FOURTH fake event. Lets begin",
-                "Long description, not used",
-                "Street 4",
-                "2020-05-10"
-        ));
-
-        eventAdapter.addItems( eventsList );
-        recyclerView.setAdapter( eventAdapter );
+        try {
+            getEventListFromApi();
+        }
+        catch (Exception e){
+            Log.e( "fetchDataForAdapter", "getEventListData api call failed " + e );
+        }
     }
+
+
+
+    private void getEventListFromApi() throws Exception {
+        File httpCacheDirectory = new File(getContext().getCacheDir(), "http-cache");
+        int cacheSize = 10 * 1024 * 1024;
+        Cache cache = new Cache( httpCacheDirectory, cacheSize );
+
+        okHttpClient = new OkHttpClient.Builder(  ).addNetworkInterceptor( new CacheInterceptor() )
+                .cache( cache )
+                .build();
+
+        final ArrayList<EventPOJO> eventsList = new ArrayList<>();
+
+        AppConf apiConf = AppConf.getInstance();
+        String eventsListApiRoute = apiConf.getEventGetListApiRoute();
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(eventsListApiRoute)
+                .newBuilder();
+
+        String url = urlBuilder.build()
+                .toString();
+
+        Request request = new Request.Builder(  )
+                .url( url )
+                .build();
+
+        okHttpClient.newCall(request).enqueue( new MainThreadOkHttpCallback() {
+
+            @Override
+            public void apiCallSuccess(String body){
+                try{
+                    JSONArray responseRoot = new JSONArray( body );
+
+                    for(int i = 0; i < responseRoot.length(); i++){
+
+                        JSONObject jObj = responseRoot.getJSONObject( i );
+                        EventPOJO eventPOJO = new EventPOJO(
+                                jObj.getString( "Id" ),
+                                jObj.getString("CoverImagePath"),
+                                jObj.getString( "Title" ),
+                                jObj.getString( "ShortDescription" ),
+                                jObj.getString( "AddressCountryCityStreet1" ),
+                                jObj.getString( "StartDate" )
+                        );
+                        eventsList.add( eventPOJO );
+                    }
+
+                    eventAdapter.addItems( eventsList );
+                    recyclerView.setAdapter( eventAdapter );
+                }
+                catch (JSONException e){
+                    Log.e("OkHttp", "Error while parsing api/event response data - " + e);
+                }
+            }
+
+            @Override
+            public void apiCallFail(Exception e){
+                Log.e("OkHttp", "Api call http://<host>/api/event failed");
+            }
+
+        } );
+
+    }
+
+
 
 
 }

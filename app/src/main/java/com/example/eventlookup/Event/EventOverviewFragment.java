@@ -27,9 +27,9 @@ import java.util.ArrayList;
  */
 public class EventOverviewFragment extends Fragment {
 
-    ViewPager2 fragmentsPager;
-    TabLayout tabLayout;
-    NavController navController;
+    private ViewPager2 fragmentsPager;
+    private TabLayout tabLayout;
+    private NavController navController;
     private ArrayList<String> mTabLayoutLabels;
 
     public EventOverviewFragment() {
@@ -55,12 +55,11 @@ public class EventOverviewFragment extends Fragment {
         navController = Navigation.findNavController( view );
 
         fragmentsPager = view.findViewById( R.id.VP2_event_overview );
-        fragmentsPager.setAdapter( new EventOverviewAdapter( this, 4, tabLayout ) );
+        fragmentsPager.setAdapter( new EventOverviewAdapter( this, 4, tabLayout, getArguments().getString( "eventId" ) ) );
         fragmentsPager.setNestedScrollingEnabled( true );
         fragmentsPager.setOrientation( ViewPager2.ORIENTATION_VERTICAL );
 
         tabLayout = view.findViewById( R.id.TBL_events_overview_tab_layout );
-//        setupTabLayout(tabLayout);
 
         new TabLayoutMediator( tabLayout, fragmentsPager, true, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
@@ -70,38 +69,6 @@ public class EventOverviewFragment extends Fragment {
         }).attach();
     }
 
-
-
-//    public void setupTabLayout(TabLayout tabLayout){
-//        tabLayout.addOnTabSelectedListener( new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                switch(tab.getPosition()){
-//                    case 0:
-//                        return;
-//                    case 1:
-//                        navController.navigate( R.id.action_eventOverviewFragment_to_eventMapFragment );
-//                        break;
-//                    case 2:
-//                        return;
-//                    case 3:
-//                        return;
-//                    default:
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
-//        } );
-//    }
 
 
 }

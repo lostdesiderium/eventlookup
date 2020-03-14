@@ -22,6 +22,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
+import com.example.eventlookup.Shared.GlideForApp;
 
 import androidx.navigation.NavController;
 
@@ -52,11 +53,11 @@ public class EventAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch(viewType){
             case VIEW_TYPE_NORMAL:
-                return new ViewHolder( LayoutInflater.from(parent.getContext()).inflate( R.layout.event_card, parent, false) );
+                return new ViewHolder( LayoutInflater.from(parent.getContext()).inflate( R.layout.event_card_2, parent, false) );
             case VIEW_TYPE_EMPTY:
-                return new EmptyViewHolder( LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card, parent, false) );
+                return new EmptyViewHolder( LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card_2, parent, false) );
             default:
-                return new EmptyViewHolder( LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card, parent, false) );
+                return new EmptyViewHolder( LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card_2, parent, false) );
         }
     }
 
@@ -131,6 +132,7 @@ public class EventAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 Glide.with(itemView.getContext()).
                         load(event.getImageURL())
                         .into(eventImage);
+
             }
 
             if(event.getEventTitle() != null){
@@ -151,7 +153,7 @@ public class EventAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 @Override
                 public void onClick(View view) {
                     Bundle bundle = new Bundle();
-                    bundle.putString("testId", event.getEventTitle());
+                    bundle.putString("eventId", event.getId());
                      Navigation.findNavController( itemView ).navigate( R.id.action_eventListFragment_to_eventOverviewFragment, bundle );
 
                 }

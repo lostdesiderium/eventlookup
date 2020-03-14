@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 import com.example.eventlookup.BaseViewHolder;
 import com.example.eventlookup.R;
 import java.util.ArrayList;
@@ -16,26 +18,20 @@ public class ImageSliderPageAdapter extends RecyclerView.Adapter<ImageSliderPage
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private ArrayList<Integer> images;
+    private ArrayList<String> ListImageUrl;
 
     // For testing purposes
     public ImageSliderPageAdapter(Context context){
         this.context = context;
-        layoutInflater = LayoutInflater.from(context);
-        images = new ArrayList<>(  );
-        fakeDataFill();
+        this.layoutInflater = LayoutInflater.from(context);
+        this.ListImageUrl = new ArrayList<>(  );
     }
 
-    public ImageSliderPageAdapter(Context context, ArrayList<Integer> views){
+    public ImageSliderPageAdapter(Context context, ArrayList<String> views){
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
-        this.images = new ArrayList<>();
-        this.images = views;
-    }
-
-    public void fakeDataFill(){
-        images.add( R.drawable.event_img3 );
-        images.add( R.drawable.event_card_background_gradient );
+        this.ListImageUrl = new ArrayList<>();
+        this.ListImageUrl = views;
     }
 
     @NonNull
@@ -52,7 +48,7 @@ public class ImageSliderPageAdapter extends RecyclerView.Adapter<ImageSliderPage
 
     @Override
     public int getItemCount() {
-        return images.size();
+        return ListImageUrl.size();
     }
 
 
@@ -67,10 +63,13 @@ public class ImageSliderPageAdapter extends RecyclerView.Adapter<ImageSliderPage
         public void onBind(int position){
             super.onBind(position);
 
-            final int imageId = images.get( position );
-            if(imageId != 0){
-                ImageView img = itemView.findViewById( R.id.IV_event_slider_item );
-                img.setImageResource( imageId );
+            final String imageUrl = ListImageUrl.get( position );
+            if(imageUrl != null){
+                ImageView imageHolder = itemView.findViewById( R.id.IV_event_slider_item );
+                Glide.with(itemView.getContext())
+                        .load( imageUrl )
+                        .into(imageHolder);
+
             }
         }
 

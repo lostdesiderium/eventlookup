@@ -19,9 +19,14 @@ import com.example.eventlookup.R;
  */
 public class EventTicketsFragment extends Fragment {
 
+    private String _eventId;
 
     public EventTicketsFragment() {
         // Required empty public constructor
+    }
+
+    public EventTicketsFragment(String eventId){
+        this._eventId = eventId;
     }
 
     @Override

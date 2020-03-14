@@ -13,6 +13,7 @@
         android:id="@+id/TBL_events_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/FillWidthTabLayout"
         >
 
         <com.google.android.material.tabs.TabItem

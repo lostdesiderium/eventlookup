@@ -7,12 +7,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     >
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/TBL_events_overview_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/FillWidthTabLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

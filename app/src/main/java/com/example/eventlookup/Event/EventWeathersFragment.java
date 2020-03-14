@@ -25,9 +25,14 @@ public class EventWeathersFragment extends Fragment {
 
     private int mDaysActiveEvent;
     private ViewGroup thisFragView;
+    private String _eventId;
 
     public EventWeathersFragment() {
         // Required empty public constructor
+    }
+
+    public EventWeathersFragment(String eventId){
+        this._eventId = eventId;
     }
 
     @Override

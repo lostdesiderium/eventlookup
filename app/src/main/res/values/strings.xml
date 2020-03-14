@@ -21,10 +21,13 @@
     <string name="event_weathers">Weather forecast</string>
     <string name="event_ticket">Tickets</string>
     <string name="event_overview">Overview</string>
-    <string name="event_directions_button_search">Search</string>
-    <string name="event_directions_et_address_hint">Type address</string>
-    <string name="in_progress">This screen is underconstruction...</string>
+    <string name="event_directions_button_search">Show me</string>
+    <string name="event_directions_et_address_source">Not from current location?</string>
+    <string name="event_directions_et_address_dest">Destination</string>
+    <string name="in_progress">This screen is underconstruction&#8230;</string>
     <string name="apologize">Sorry,</string>
+    <string name="event_going_ppl_count">Going:</string>
+    <string name="event_interested_ppl_count">Interested:</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

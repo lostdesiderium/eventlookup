@@ -15,12 +15,14 @@ import androidx.viewpager2.widget.ViewPager2;
 public class EventOverviewAdapter extends FragmentStateAdapter {
 
     private int mFragmentsCount;
-    public TabLayout tabLayout;
+    private TabLayout tabLayout;
+    private String _eventId;
 
-    public EventOverviewAdapter(@NonNull Fragment fragment, int fragmentsCount, TabLayout tabLayout) {
+    public EventOverviewAdapter(@NonNull Fragment fragment, int fragmentsCount, TabLayout tabLayout, String eventId) {
         super( fragment );
         this.mFragmentsCount = fragmentsCount;
         this.tabLayout = tabLayout;
+        this._eventId = eventId;
     }
 
     @NonNull
@@ -28,13 +30,13 @@ public class EventOverviewAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch(position){
             case 0:
-                return new EventInfoFragment();
+                return new EventInfoFragment(_eventId);
             case 1:
-                return new EventMapFragment();
+                return new EventMapFragment(_eventId);
             case 2:
-                return new EventWeathersFragment();
+                return new EventWeathersFragment(_eventId);
             case 3:
-                return new EventTicketsFragment();
+                return new EventTicketsFragment(_eventId);
             default:
                 return new EventOverviewFragment();
         }

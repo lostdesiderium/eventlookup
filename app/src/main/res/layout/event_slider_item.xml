@@ -8,8 +8,8 @@
         android:layout_height="match_parent"
         android:id="@+id/IV_event_slider_item"
         android:contentDescription="@string/event_title"
-        android:scaleType="fitXY"
-
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
         >
 
     </ImageView>
