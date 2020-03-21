@@ -1,7 +1,6 @@
 package com.example.eventlookup.Event;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,11 +16,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.eventlookup.Event.Adapters.ImageSliderPageAdapter;
 import com.example.eventlookup.Event.POJOs.EventFullPOJO;
-import com.example.eventlookup.Event.POJOs.EventPOJO;
 import com.example.eventlookup.R;
 import com.example.eventlookup.Shared.AppConf;
 import com.example.eventlookup.Shared.CacheInterceptor;
@@ -32,7 +32,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -46,6 +45,10 @@ public class EventInfoFragment extends Fragment {
     private ImageSliderPageAdapter sliderPageAdapter;
     private Context _thisContext;
     private View _thisView;
+
+    private AlphaAnimation inAlphaAnimation;
+    private AlphaAnimation outAlphaAnimation;
+    private FrameLayout progressBarHolder;
 
     public EventInfoFragment() {
         // Required empty public constructor
@@ -71,6 +74,7 @@ public class EventInfoFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated( view, savedInstanceState );
+        progressBarHolder = view.findViewById( R.id.FL_PB_holder_events_list );
 
         _thisContext = this.getContext();
         _thisView = view;
@@ -79,7 +83,26 @@ public class EventInfoFragment extends Fragment {
         sliderPageAdapter = new ImageSliderPageAdapter( _thisContext );
         imageViewPager.setAdapter( sliderPageAdapter);
 
+        imageViewPager.registerOnPageChangeCallback( new ViewPager2.OnPageChangeCallback(){
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected( position );
+                sliderPageAdapter.changeIndicator( position );
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled( position, positionOffset, positionOffsetPixels );
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged( state );
+            }
+        } );
+
         try{
+            progressBarHolder.setVisibility( View.VISIBLE );
             getEventDetailedInfo();
         }
         catch (Exception e){
@@ -98,7 +121,7 @@ public class EventInfoFragment extends Fragment {
         eventTitle.setText( eventDetails.getEventTitle() );
         eventLongDescr.setText( eventDetails.getEventDescription() );
         eventLocation.setText( eventDetails.getEventLocation() );
-        eventDate.setText( eventDetails.getEventDate() );
+        eventDate.setText( eventDetails.getFormattedEventDateFromString(eventDetails.getEventDate()) );
         eventInterestedPeopleCount.setText( eventDetails.getInterestedPeopleCount() );
         eventGoingPeopleCount.setText(eventDetails.getGoingPeopleCount());
 
@@ -206,11 +229,11 @@ public class EventInfoFragment extends Fragment {
                             imagesUrls
                     );
 
-                    sliderPageAdapter = new ImageSliderPageAdapter( _thisContext, imagesUrls );
+                    sliderPageAdapter = new ImageSliderPageAdapter( _thisContext, imagesUrls, _thisView );
                     imageViewPager.setAdapter( sliderPageAdapter);
 
                     bindDataToView( eventDetails );
-
+                    progressBarHolder.setVisibility( View.GONE);
                 }
                 catch (JSONException e){
                     Log.e("OkHttp", "Error while parsing api/event/{id} response data - " + e);

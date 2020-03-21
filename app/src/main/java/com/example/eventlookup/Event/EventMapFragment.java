@@ -4,6 +4,8 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -16,7 +18,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 
 import com.example.eventlookup.Event.Adapters.ImageSliderPageAdapter;
 import com.example.eventlookup.Event.POJOs.EventFullPOJO;
@@ -50,6 +56,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,6 +88,7 @@ public class EventMapFragment extends Fragment implements OnMapReadyCallback, Lo
     private DirectionsResult mDirectionsResult = null;
     private ArrayList<PolylineData> mPolylineDataList = new ArrayList<>();
     private Marker currentSelectedMarker;
+    private Geocoder geocoder;
 
     // Location
     private LocationManager mLocationManager;
@@ -93,8 +101,13 @@ public class EventMapFragment extends Fragment implements OnMapReadyCallback, Lo
 
     // Other
     private OkHttpClient okHttpClient;
-
     private String _eventId;
+    private AlphaAnimation inAlphaAnimation;
+    private AlphaAnimation outAlphaAnimation;
+    private FrameLayout progressBarHolder;
+
+    private EditText sourceET = null;
+    private Button searchBtn = null;
 
     public EventMapFragment() {
         // Required empty public constructor
@@ -115,9 +128,9 @@ public class EventMapFragment extends Fragment implements OnMapReadyCallback, Lo
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated( view, savedInstanceState );
 
-//        SupportMapFragment map = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapView);
-
-//        map.getMapAsync( this );
+        // Getting layout components and setting needed listeners
+        prepareLayoutCompononents( view );
+        prepareListeners( view );
 
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
@@ -128,20 +141,19 @@ public class EventMapFragment extends Fragment implements OnMapReadyCallback, Lo
                     .apiKey(AppConf.GOOGLE_MAPS_API_KEY)
                     .build();
         }
+        geocoder = new Geocoder( getContext() );
 
         try {
+            progressBarHolder.setVisibility( View.GONE );
             getEventDetailedInfo();
         }
         catch (Exception e){
             Log.e(FRAGMENT_MAP_TAG, "Error while fetching data");
         }
 
-        mMapView = view.findViewById(R.id.mapView);
+
         mMapView.onCreate(mapViewBundle);
-
         mMapView.getMapAsync(this);
-
-        prepareButton( view );
     }
 
     @Override
@@ -246,7 +258,7 @@ public class EventMapFragment extends Fragment implements OnMapReadyCallback, Lo
         googleMap.animateCamera( CameraUpdateFactory.newLatLngBounds( mMapBounds , routePadding ), 400,null );
     }
 
-    private void calculateDirections(){
+    private void calculateDirections(LatLng differentSource){
         com.google.maps.model.LatLng userDestination = new com.google.maps.model.LatLng(
                 mEventLat,
                 mEventLng
@@ -256,6 +268,10 @@ public class EventMapFragment extends Fragment implements OnMapReadyCallback, Lo
 
         directionsApiRequest.alternatives( true );
         // current user coordinates
+        if(differentSource != null){
+            mCurrentUserLat = differentSource.latitude;
+            mCurrentUserLng = differentSource.longitude;
+        }
         directionsApiRequest.origin(
                 new com.google.maps.model.LatLng(
                         mCurrentUserLat,
@@ -276,6 +292,8 @@ public class EventMapFragment extends Fragment implements OnMapReadyCallback, Lo
                 Log.e(FRAGMENT_MAP_TAG, e.toString());
             }
         } );
+
+        progressBarHolder.setVisibility( View.GONE );
 
     }
 
@@ -331,13 +349,48 @@ public class EventMapFragment extends Fragment implements OnMapReadyCallback, Lo
         currentSelectedMarker = marker;
     }
 
-    private void prepareButton(View view){
-        Button button = view.findViewById( R.id.event_direction_search );
-        button.setOnClickListener( new Button.OnClickListener(){
+    private LatLng getLocationCoordinatesFromLocationString(){
+        String sourceString = sourceET.getText().toString();
+
+        List<Address> addressList;
+        LatLng addressCoordinates = null;
+
+        try{
+            addressList = geocoder.getFromLocationName( sourceString, 1 );
+            if(addressList != null && addressList.size() > 0){
+              Address location = addressList.get(0); // getting first found closest address
+              addressCoordinates = new LatLng( location.getLatitude(), location.getLongitude() );
+            }
+        }
+        catch (IOException e){
+            Log.e(FRAGMENT_MAP_TAG, e.toString());
+        }
+
+        return addressCoordinates;
+    }
+
+    private void prepareLayoutCompononents(View view){
+        sourceET =  view.findViewById( R.id.ET_event_directions_source );
+        searchBtn = view.findViewById( R.id.event_direction_search );
+        mMapView = view.findViewById(R.id.mapView);
+        progressBarHolder = view.findViewById( R.id.FL_PB_holder_events_list );
+    }
+
+    private void prepareListeners(final View fragmentView){
+        searchBtn.setOnClickListener( new Button.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-                calculateDirections(  );
+                // Hiding keyboard
+                InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService( Context.INPUT_METHOD_SERVICE );
+                try {
+                    inputMethodManager.hideSoftInputFromWindow( fragmentView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS );
+                }
+                catch (NullPointerException e){
+                    Log.e(FRAGMENT_MAP_TAG, e.toString());
+                }
+                LatLng differentSource = getLocationCoordinatesFromLocationString();
+                calculateDirections( differentSource );
             }
         } );
     }
@@ -358,7 +411,7 @@ public class EventMapFragment extends Fragment implements OnMapReadyCallback, Lo
         googleMap.setMyLocationEnabled( true );
         googleMap.setOnPolylineClickListener( this );
 
-        calculateDirections();
+        calculateDirections(getLocationCoordinatesFromLocationString());
 
         List<LatLng> coords = new ArrayList<>();
         coords.add( new LatLng( this.mCurrentUserLat, this.mCurrentUserLng ) );

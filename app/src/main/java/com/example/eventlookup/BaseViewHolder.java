@@ -22,4 +22,6 @@ public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
         return CurrentPosition;
     }
 
+
+
 }

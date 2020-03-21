@@ -2,20 +2,12 @@ package com.example.eventlookup.Shared;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
-
-import com.example.eventlookup.Event.POJOs.EventPOJO;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public abstract class MainThreadOkHttpCallback implements Callback {
 

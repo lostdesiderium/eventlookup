@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.widget.FrameLayout;
 
 import com.example.eventlookup.R;
 
@@ -20,6 +22,9 @@ import com.example.eventlookup.R;
 public class EventTicketsFragment extends Fragment {
 
     private String _eventId;
+    private AlphaAnimation inAlphaAnimation;
+    private AlphaAnimation outAlphaAnimation;
+    private FrameLayout progressBarHolder;
 
     public EventTicketsFragment() {
         // Required empty public constructor
@@ -46,6 +51,9 @@ public class EventTicketsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated( view, savedInstanceState );
 
+        progressBarHolder = view.findViewById( R.id.FL_PB_holder_events_list );
+        progressBarHolder.setVisibility( View.VISIBLE );
+        progressBarHolder.setVisibility( View.GONE );
     }
 
 }

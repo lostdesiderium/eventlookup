@@ -11,5 +11,6 @@
     tools:context=".Event.EventWeathersFragment"
     >
 
+    <include layout="@layout/frame_layout_loader"/>
 
 </LinearLayout>

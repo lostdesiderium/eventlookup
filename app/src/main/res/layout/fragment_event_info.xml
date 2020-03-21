@@ -15,18 +15,30 @@
     tools:context=".Event.EventOverviewFragment"
     >
 
+    <include layout="@layout/frame_layout_loader"/>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/VP_event_overview_slider"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="4"
+        >
 
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="77dp">
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/VP_event_overview_slider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="77dp">
+        </androidx.viewpager2.widget.ViewPager2>
 
 
-    </androidx.viewpager2.widget.ViewPager2>
+        <include layout="@layout/slider_indicator"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

@@ -10,6 +10,8 @@
     tools:context=".Event.EventTicketsFragment"
     >
 
+    <include layout="@layout/frame_layout_loader"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

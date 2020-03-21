@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.example.eventlookup.BaseViewHolder;
-import com.example.eventlookup.Event.POJOs.EventPOJO;
+import com.example.eventlookup.Event.POJOs.EventListItemPOJO;
 import com.example.eventlookup.R;
 
 import java.util.ArrayList;
@@ -22,7 +22,6 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
-import com.example.eventlookup.Shared.GlideForApp;
 
 import androidx.navigation.NavController;
 
@@ -32,13 +31,13 @@ public class EventAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public static final int VIEW_TYPE_NORMAL = 1;
 
     private Callback callback;
-    public List<EventPOJO>  eventsList;
+    public List<EventListItemPOJO>  eventsList;
 
     public EventAdapter(){
 
     }
 
-    public EventAdapter(ArrayList<EventPOJO> eventsList) {
+    public EventAdapter(ArrayList<EventListItemPOJO> eventsList) {
         this.eventsList = eventsList;
     }
 
@@ -87,7 +86,7 @@ public class EventAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     // ------------------ Overriding methods from default RecyclerView.Adapter but Adapter itself is handling their calls
 
 
-    public void addItems(ArrayList<EventPOJO> eventsList){
+    public void addItems(ArrayList<EventListItemPOJO> eventsList){
         this.eventsList = eventsList;
         notifyDataSetChanged(); // Should be used as a last resort only because its not so efficient (notifyItemChanged for item change and notifyItemInserted for structural change
     }
@@ -126,7 +125,7 @@ public class EventAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position){
             super.onBind(position);
 
-            final EventPOJO event = eventsList.get(position);
+            final EventListItemPOJO event = eventsList.get(position);
 
             if(event.getImageURL() != null){
                 Glide.with(itemView.getContext()).
@@ -145,7 +144,7 @@ public class EventAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 eventLocation.setText( event.getEventLocation().toString() );
             }
             if(event.getEventDate() != null){
-                eventDate.setText( event.getEventDate().toString() );
+                eventDate.setText( event.getFormattedEventDate() );
             }
 
             // Here goes item event listener

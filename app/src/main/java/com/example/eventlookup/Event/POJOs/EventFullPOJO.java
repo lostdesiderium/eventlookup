@@ -1,8 +1,14 @@
 package com.example.eventlookup.Event.POJOs;
 
+import android.util.Log;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class EventFullPOJO {
+    private final String TAG = "EVENT_FULL_POJO";
 
     private String Id;
     private String EventTitle;
@@ -15,6 +21,9 @@ public class EventFullPOJO {
     private String Lat;
     private String Lng;
     private ArrayList<String> ListImageUrl;
+
+    private final String DISPLAY_FORMAT = "MMM dd HH:mm yyyy";
+    private final String PARSE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
     public EventFullPOJO(String id, String eventTitle, String eventDescription, String eventLocation, String eventDate,
                          String interestedPeopleCount, String goingPeopleCount, String daysEventActive, String lat, String lng, ArrayList<String> listImageUrl) {
@@ -117,5 +126,20 @@ public class EventFullPOJO {
 
     public void setListImageUrl(ArrayList<String> listImageUrl) {
         ListImageUrl = listImageUrl;
+    }
+
+    public  String getFormattedEventDateFromString(String date){
+        SimpleDateFormat formatter = new SimpleDateFormat( PARSE_FORMAT );
+
+        try{
+            Date formattedDate = formatter.parse( date );
+            String reformattedDate = new SimpleDateFormat( DISPLAY_FORMAT ).format( formattedDate );
+            return reformattedDate;
+        }
+        catch(ParseException e){
+            Log.e(TAG, e.toString());
+        }
+
+        return "";
     }
 }

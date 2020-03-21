@@ -1,6 +1,7 @@
 package com.example.eventlookup.Event.Adapters;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import com.example.eventlookup.BaseViewHolder;
 import com.example.eventlookup.R;
 import java.util.ArrayList;
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 
@@ -19,6 +21,9 @@ public class ImageSliderPageAdapter extends RecyclerView.Adapter<ImageSliderPage
     private Context context;
     private LayoutInflater layoutInflater;
     private ArrayList<String> ListImageUrl;
+    private ConstraintLayout CL_sliderIndicator;
+    private View thisFragView;
+    private int mLastSliderPosition = 0;
 
     // For testing purposes
     public ImageSliderPageAdapter(Context context){
@@ -27,11 +32,13 @@ public class ImageSliderPageAdapter extends RecyclerView.Adapter<ImageSliderPage
         this.ListImageUrl = new ArrayList<>(  );
     }
 
-    public ImageSliderPageAdapter(Context context, ArrayList<String> views){
+    public ImageSliderPageAdapter(Context context, ArrayList<String> views, View view){
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
         this.ListImageUrl = new ArrayList<>();
         this.ListImageUrl = views;
+        this.thisFragView = view;
+        createSliderIndicator( views.size() );
     }
 
     @NonNull
@@ -49,6 +56,52 @@ public class ImageSliderPageAdapter extends RecyclerView.Adapter<ImageSliderPage
     @Override
     public int getItemCount() {
         return ListImageUrl.size();
+    }
+
+
+
+    private void createSliderIndicator(int count){
+        CL_sliderIndicator = thisFragView.findViewById( R.id.CL_of_slider_indicator );
+
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+
+
+        for(int i = 0; i < count; i++){
+            ImageView imageView = (ImageView) layoutInflater.inflate( R.layout.indicator_active, (ViewGroup) CL_sliderIndicator, false );
+            if( i  != 0) {
+                imageView.setImageDrawable( context.getDrawable( R.drawable.oval_inactive ) );
+            }
+
+            imageView.setPadding( 40 * i, 0 ,0 , 0 );
+            imageView.setTag( ListImageUrl.get( i ) );
+
+            CL_sliderIndicator.addView( imageView );
+        }
+    }
+
+    public void changeIndicator(int position){
+
+        if(position == mLastSliderPosition)
+            return;
+
+        if(position < 0)
+            position = 0;
+
+        // change current indicator to active
+        ImageView imageView = (ImageView) thisFragView.findViewWithTag( ListImageUrl.get( position ) );
+
+        if(imageView != null) {
+            imageView.setImageDrawable( context.getDrawable( R.drawable.oval_active ) );
+        }
+
+        // change last indicator to inactive
+        imageView = (ImageView) thisFragView.findViewWithTag(  ListImageUrl.get(mLastSliderPosition) );
+
+        if(imageView != null) {
+            imageView.setImageDrawable( context.getDrawable( R.drawable.oval_inactive ) );
+        }
+
+        mLastSliderPosition = position;
     }
 
 
@@ -72,6 +125,8 @@ public class ImageSliderPageAdapter extends RecyclerView.Adapter<ImageSliderPage
 
             }
         }
+
+
 
         // Inherited method from BaseViewHolder
         public void clear(){

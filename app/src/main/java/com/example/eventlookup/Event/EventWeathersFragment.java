@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,6 +28,9 @@ public class EventWeathersFragment extends Fragment {
     private int mDaysActiveEvent;
     private ViewGroup thisFragView;
     private String _eventId;
+    private AlphaAnimation inAlphaAnimation;
+    private AlphaAnimation outAlphaAnimation;
+    private FrameLayout progressBarHolder;
 
     public EventWeathersFragment() {
         // Required empty public constructor
@@ -54,9 +59,11 @@ public class EventWeathersFragment extends Fragment {
         super.onViewCreated( view, savedInstanceState );
 
         LinearLayout linearLayoutParent = view.findViewById( R.id.LL_event_weathers );
-//        mDaysActiveEvent = Integer.parseInt(  getArguments().getString("eventId") );
+
+        progressBarHolder = view.findViewById( R.id.FL_PB_holder_events_list );
         mDaysActiveEvent = 3; // Fake data
 
+        progressBarHolder.setVisibility( View.VISIBLE );
         attachDataToLayout( linearLayoutParent, view );
     }
 
@@ -75,7 +82,9 @@ public class EventWeathersFragment extends Fragment {
             eventForecastValueTV.setText( (17 + i )+ "°" );
 
             linearLayout.addView( eventWeatherForecast );
+
         }
+        progressBarHolder.setVisibility( View.GONE );
 
     }
 
