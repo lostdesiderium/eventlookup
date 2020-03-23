@@ -11,6 +11,7 @@ public class AppConf {
     // Libs constants
     public static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     public static final String GOOGLE_MAPS_API_KEY = "AIzaSyBR0fP8lskDHUQEriVjzeGTG79mjswtWfE";
+    public static final String WEATHERBIT_API_KEY = "0ef36a384ba0410b8cc6d23589a40bbc";
 
     // API base's
     private static final String API_SCHEME = "http://";
@@ -19,6 +20,7 @@ public class AppConf {
     // API Routes
     private final String EVENT_GET_LIST_API_ROUTE =  API_SCHEME +  API_BASE + "event";
     private final String EVENT_GET_EVENT_DETAILED_API_ROUTE =  API_SCHEME +  API_BASE + "event/";
+    private final String WEATHERBIT_GET_FORECAST_16 = API_SCHEME + "api.weatherbit.io/v2.0/forecast/daily";
 
     // Singleton class
     private static AppConf appConfInstance = null;
@@ -44,4 +46,7 @@ public class AppConf {
         return EVENT_GET_EVENT_DETAILED_API_ROUTE;
     }
 
+    public String getWEATHERBIT_GET_FORECAST_16() {
+        return WEATHERBIT_GET_FORECAST_16;
+    }
 }

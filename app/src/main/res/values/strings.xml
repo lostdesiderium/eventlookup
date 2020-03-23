@@ -19,6 +19,7 @@
     <string name="event_finished_events">Finished events</string>
     <string name="event_directions">Directions</string>
     <string name="event_weathers">Weather forecast</string>
+    <string name="event_weather_wind_string">wind</string>
     <string name="event_ticket">Tickets</string>
     <string name="event_overview">Overview</string>
     <string name="event_directions_button_search">Show me</string>
