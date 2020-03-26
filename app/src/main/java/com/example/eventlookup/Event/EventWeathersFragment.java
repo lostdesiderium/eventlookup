@@ -36,6 +36,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.zip.Inflater;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,13 +52,15 @@ import okhttp3.Request;
  */
 public class EventWeathersFragment extends Fragment {
     private final String TAG = "EventWeathersFragment";
+    private final int MAX_DAYS_FORECAST = 16;
 
     private View mThisView;
-    private AlphaAnimation inAlphaAnimation;
-    private AlphaAnimation outAlphaAnimation;
+    private LinearLayout linearLayoutParent;
     private FrameLayout progressBarHolder;
     private OkHttpClient okHttpClient;
-    private Date currentDate = new Date();
+    private ConstraintLayout notAvailableCL;
+    private AlphaAnimation inAlphaAnimation;
+    private AlphaAnimation outAlphaAnimation;
 
     private String _eventId;
     private Date mEventStartDate;
@@ -66,7 +69,7 @@ public class EventWeathersFragment extends Fragment {
     private double mEventLat;
     private double mEventLng;
     private ArrayList<EventWeatherPOJO> mWeatherForecasts;
-    private LinearLayout linearLayoutParent;
+    private Date currentDate = new Date();
 
     public EventWeathersFragment() {
         // Required empty public constructor
@@ -211,13 +214,13 @@ public class EventWeathersFragment extends Fragment {
             @Override
             public void apiCallSuccess(String body){
                 try{
-                    Utils utils = new Utils();
                     JSONObject responseObj = new JSONObject( body );
                     JSONArray responseDataArray = responseObj.getJSONArray( "data" );
 
                     int offsetToData = getDayNumberOffsetToForecast();
                     int daysNumberToGet = getAvailableDaysNumberForForecast();
-                    for(int i = offsetToData + 1; i < offsetToData + daysNumberToGet; i++){
+                    int limit = (offsetToData + 1) + daysNumberToGet;
+                    for(int i = offsetToData + 1; i < limit && i < MAX_DAYS_FORECAST; i++){
                         JSONObject oneDayForecastObj = responseDataArray.getJSONObject( i );
                         double windSpeed = oneDayForecastObj.getDouble( "wind_spd" );
                         String windDirectionText = oneDayForecastObj.getString( "wind_cdir_full" );
@@ -258,54 +261,57 @@ public class EventWeathersFragment extends Fragment {
     }
 
     private void attachWeatherDataToLayout(View view ) {
-        int weightForLayout = 10 / mEventDaysActive;
-
         Resources resources = getContext().getResources();
         String packageName = getContext().getPackageName();
-        for (int i = 0; i < weightForLayout; i++) {
-            if(i < mWeatherForecasts.size()) {
-                EventWeatherPOJO eventDayForecast = mWeatherForecasts.get( i );
-                View eventWeatherForecast = getLayoutInflater().inflate( R.layout.event_weather_row, (ViewGroup) view, false );
+        for (int i = 0; i < mWeatherForecasts.size(); i++) {
 
-                ImageView iconIV = eventWeatherForecast.findViewById( R.id.IV_event_weather_day_forecast_icon );
-                TextView eventForecastDateTV = eventWeatherForecast.findViewById( R.id.TV_event_weather_day_forecast_date );
-                TextView eventForecastValueTV = eventWeatherForecast.findViewById( R.id.TV_event_weather_day_forecast_value );
-                TextView eventForecastDescription = eventWeatherForecast.findViewById( R.id.TV_event_weather_day_description );
-                TextView eventForecastWindDescription = eventWeatherForecast.findViewById( R.id.TV_event_weather_day_wind_description );
+            EventWeatherPOJO eventDayForecast = mWeatherForecasts.get( i );
+            View eventWeatherForecast = getLayoutInflater().inflate( R.layout.event_weather_row, (ViewGroup) view, false );
 
-                String iconCode = eventDayForecast.getmIconCode();
-                final int resourceId = resources.getIdentifier( iconCode, "drawable", packageName );
-                Drawable actualIcon = resources.getDrawable( resourceId );
-                iconIV.setImageDrawable( actualIcon );
+            ImageView iconIV = eventWeatherForecast.findViewById( R.id.IV_event_weather_day_forecast_icon );
+            TextView eventForecastDateTV = eventWeatherForecast.findViewById( R.id.TV_event_weather_day_forecast_date );
+            TextView eventForecastValueTV = eventWeatherForecast.findViewById( R.id.TV_event_weather_day_forecast_value );
+            TextView eventForecastDescription = eventWeatherForecast.findViewById( R.id.TV_event_weather_day_description );
+            TextView eventForecastWindDescription = eventWeatherForecast.findViewById( R.id.TV_event_weather_day_wind_description );
 
-                eventForecastDateTV.setText( eventDayForecast.getmDate() );
+            String iconCode = eventDayForecast.getmIconCode();
+            final int resourceId = resources.getIdentifier( iconCode, "drawable", packageName );
+            Drawable actualIcon = resources.getDrawable( resourceId );
+            iconIV.setImageDrawable( actualIcon );
 
-                String maxTemp = eventDayForecast.getmMaxTemp() + "° C";
-                eventForecastValueTV.setText( maxTemp );
+            eventForecastDateTV.setText( eventDayForecast.getmDate() );
 
-                eventForecastDescription.setText( eventDayForecast.getmWeatherDescription() );
+            String maxTemp = eventDayForecast.getmMaxTemp() + "° C";
+            eventForecastValueTV.setText( maxTemp );
 
-                double windSpeed = (double) Math.round( eventDayForecast.getmWindSpeed() * 10 ) / 10;
-                String windDescription = windSpeed + " m/s " + eventDayForecast.getmWindDirectionText() + " wind";
-                eventForecastWindDescription.setText( windDescription );
+            eventForecastDescription.setText( eventDayForecast.getmWeatherDescription() );
 
-                linearLayoutParent.addView( eventWeatherForecast );
-            }
+            double windSpeed = (double) Math.round( eventDayForecast.getmWindSpeed() * 10 ) / 10;
+            String windDescription = windSpeed + " m/s " + eventDayForecast.getmWindDirectionText() + " wind";
+            eventForecastWindDescription.setText( windDescription );
+
+            linearLayoutParent.addView( eventWeatherForecast );
+
         }
         progressBarHolder.setVisibility( View.GONE );
     }
 
     private boolean checkIfForecastIsAvailable(){
         long oneDay = new Utils().getOneDaySeconds();
-        Date datePlusSixteenDays = new Date(currentDate.getTime() + (oneDay * 16L) ); // L means to operate with long type and not int
+        Date datePlusSixteenDays = new Date(currentDate.getTime() + (oneDay * (long)MAX_DAYS_FORECAST) ); // L means to operate with long type and not int
+        if(mEventStartDate.before( currentDate ))
+            return false;
 
         return mEventStartDate.before(datePlusSixteenDays);
     }
 
     private int getAvailableDaysNumberForForecast(){
         long oneDay = new Utils().getOneDaySeconds();
-        Date datePlusSixteenDays = new Date(currentDate.getTime() + (oneDay * 16L) ); // L means to operate with long type and not int
+        Date datePlusSixteenDays = new Date(currentDate.getTime() + (oneDay * (long)MAX_DAYS_FORECAST) ); // long means to operate with long type and not int for accurate results
 
+        if(mEventStartDate.getTime() + (oneDay * (long)mEventDaysActive) < datePlusSixteenDays.getTime()){
+            return mEventDaysActive;
+        }
         long differenceInMillis = Math.abs(datePlusSixteenDays.getTime() - mEventStartDate.getTime());
         long differenceInDays = TimeUnit.DAYS.convert( differenceInMillis, TimeUnit.MILLISECONDS );
 
@@ -320,7 +326,15 @@ public class EventWeathersFragment extends Fragment {
     }
 
     private void showForecastUnavailableLayout(){
+        LayoutInflater inflater = getLayoutInflater();
+        View notAvailableForecastCL = inflater.inflate(R.layout.forecast_not_available, (ViewGroup) mThisView, false );
+        if(mEventStartDate.before( currentDate )){
+            TextView notAvailableForecastTV = notAvailableForecastCL.findViewById( R.id.TV_event_forecast_not_available_description );
+            notAvailableForecastTV.setText( R.string.event_finished_no_forecast );
+        }
 
+        linearLayoutParent.addView( notAvailableForecastCL );
+        progressBarHolder.setVisibility( View.GONE );
     }
 
 }

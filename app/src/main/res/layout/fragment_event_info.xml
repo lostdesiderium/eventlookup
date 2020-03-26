@@ -75,11 +75,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin_from_parent"
             android:layout_marginEnd="@dimen/default_margin_from_parent"
+            android:paddingEnd="2dp"
+            android:paddingStart="2dp"
             android:text="@string/event_location"
-            android:textAlignment="textEnd"
+            android:textAlignment="textStart"
             android:textColor="@color/colorLightBlack"
             android:textSize="12sp"
-            android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/event_overview_description" />
 
@@ -89,11 +90,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/close_margin_from_view"
             android:layout_marginEnd="@dimen/default_margin_from_parent"
+            android:paddingEnd="2dp"
+            android:paddingStart="2dp"
             android:text="@string/event_date"
-            android:textAlignment="textEnd"
+            android:textAlignment="textStart"
             android:textColor="@color/colorLightBlack"
             android:textSize="12sp"
-            android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/event_overview_location" />
 

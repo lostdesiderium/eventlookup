@@ -41,8 +41,8 @@
             android:layout_marginStart="@dimen/default_margin_from_parent"
             android:layout_marginEnd="@dimen/default_margin_from_parent"
             android:text="@string/event_directions_button_search"
+            android:textColor="@color/colorDarkWhite"
             style="@style/Widget.AppCompat.Button.Colored"
-
             />
 
     </LinearLayout>

@@ -27,9 +27,17 @@
     <string name="event_directions_et_address_dest">Destination</string>
     <string name="in_progress">This screen is underconstruction&#8230;</string>
     <string name="apologize">Sorry,</string>
+    <string name="no_weather_forecast">Forecasts are available up to 16 days, comeback later</string>
+    <string name="event_finished_no_forecast">This event already happened, no need to forecast</string>
     <string name="event_going_ppl_count">Going:</string>
     <string name="event_interested_ppl_count">Interested:</string>
     <string name="event_list_search_hint">Search for event by title</string>
+    <string name="login_email">Email</string>
+    <string name="login_email_hint">Enter your email</string>
+    <string name="login_password">Password</string>
+    <string name="login_password_hint">Enter your password</string>
+    <string name="Login">Sign in</string>
+    <string name="login_action_sign_up"><u>Create account</u></string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
