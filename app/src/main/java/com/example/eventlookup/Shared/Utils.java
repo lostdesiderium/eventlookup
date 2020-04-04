@@ -1,5 +1,7 @@
 package com.example.eventlookup.Shared;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.text.ParseException;
@@ -44,5 +46,18 @@ public class Utils {
 
     public long getOneDaySeconds(){
         return 1000 * 60 * 60 *  24;
+    }
+
+    public SharedPreferences getAppSharedPreferences(Context context){
+        return context.getSharedPreferences( AppConf.APP_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE );
+    }
+
+    public String getAppToken(Context context){
+        return getAppSharedPreferences( context ).getString( AppConf.TOKEN_KEY, "" );
+    }
+
+    public void writeAppTokenToSharedPreferences(Context context, String token){
+        SharedPreferences prefs = getAppSharedPreferences( context );
+        prefs.edit().putString( AppConf.TOKEN_KEY, token).apply();
     }
 }

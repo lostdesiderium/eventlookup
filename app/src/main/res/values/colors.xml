@@ -7,7 +7,10 @@
     <color name="colorLightBlack">#404040</color>
     <color name="colorDarkBlue">#375fd7</color>
     <color name="colorLightTeal">#8bf4e9</color>
-    <color name="colorAccentSoftRed">#ff4d4d</color>
+    <color name="colorAccentSoftRed">#f44336</color>
+    <color name="colorComplementarySkyBlue">#36e7f4</color>
     <color name="colorGrey">#9c9596</color>
     <color name="colorLightGrey">#aabdbdbd</color>
+    <color name="colorOpacityDarkWhite">#ddf2f2f2</color>
+    <color name="colorOpacityLightBlack">#dd404040</color>
 </resources>

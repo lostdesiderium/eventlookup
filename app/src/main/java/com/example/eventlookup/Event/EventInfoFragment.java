@@ -191,7 +191,7 @@ public class EventInfoFragment extends Fragment {
                 try{
                     JSONObject response = new JSONObject( body );
 
-                    String id = response.getString( "Id" );
+                    String id = response.getString( "EventId" );
                     String title = response.getString( "Title" );
                     String eventShortDesc = response.getString( "ShortDescription" );
                     String eventLongDesc = response.getString( "LongDescription" );

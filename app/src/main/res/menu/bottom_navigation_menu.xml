@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/action_events"
         android:title="@string/event_icon_string"
-        android:icon="@drawable/ic_event_black_24dp" />
+        android:icon="@drawable/event" />
     <item android:id="@+id/action_account"
         android:title="@string/account_icon_string"
-        android:icon="@drawable/ic_account_box_black_24dp" />
+        android:icon="@drawable/user" />
     <item android:id="@+id/action_more"
         android:title="@string/more_icon_string"
-        android:icon="@drawable/ic_action_more_24dp" />
+        android:icon="@drawable/more" />
 
 </menu>

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.example.eventlookup.BaseViewHolder;
+import com.example.eventlookup.Shared.BaseViewHolder;
 import com.example.eventlookup.Event.POJOs.EventListItemPOJO;
 import com.example.eventlookup.R;
 

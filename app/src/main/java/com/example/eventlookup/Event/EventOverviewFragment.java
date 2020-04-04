@@ -31,6 +31,7 @@ public class EventOverviewFragment extends Fragment {
     private TabLayout tabLayout;
     private NavController navController;
     private ArrayList<String> mTabLayoutLabels;
+    private final int FRAGMENTS_COUNT = 4;
 
     public EventOverviewFragment() {
         // Required empty public constructor
@@ -55,7 +56,7 @@ public class EventOverviewFragment extends Fragment {
         navController = Navigation.findNavController( view );
 
         fragmentsPager = view.findViewById( R.id.VP2_event_overview );
-        fragmentsPager.setAdapter( new EventOverviewAdapter( this, 4, tabLayout, getArguments().getString( "eventId" ) ) );
+        fragmentsPager.setAdapter( new EventOverviewAdapter( this, FRAGMENTS_COUNT, tabLayout, getArguments().getString( "eventId" ) ) );
         fragmentsPager.setNestedScrollingEnabled( true );
         fragmentsPager.setOrientation( ViewPager2.ORIENTATION_VERTICAL );
 

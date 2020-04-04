@@ -155,7 +155,7 @@ public class EventListFragment extends Fragment {
 
                         JSONObject jObj = responseRoot.getJSONObject( i );
                         EventListItemPOJO eventListItemPOJO = new EventListItemPOJO(
-                                jObj.getString( "Id" ),
+                                jObj.getString( "EventId" ),
                                 jObj.getString("CoverImagePath"),
                                 jObj.getString( "Title" ),
                                 jObj.getString( "ShortDescription" ),

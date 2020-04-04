@@ -1,5 +1,7 @@
 package com.example.eventlookup.Shared;
 
+import okhttp3.MediaType;
+
 public class AppConf {
 
     // Permissions
@@ -20,7 +22,17 @@ public class AppConf {
     // API Routes
     private final String EVENT_GET_LIST_API_ROUTE =  API_SCHEME +  API_BASE + "event";
     private final String EVENT_GET_EVENT_DETAILED_API_ROUTE =  API_SCHEME +  API_BASE + "event/";
+    private final String ACCOUNT_LOGIN_API_ROUTE = API_SCHEME + API_BASE + "users/login";
+    private final String ACCOUNT_TOKEN_LOGIN_API_ROUTE = API_SCHEME + API_BASE + "users/token-login";
+    private final String ACCOUNT_REGISTER_API_ROUTE = API_SCHEME + API_BASE + "users/register";
     private final String WEATHERBIT_GET_FORECAST_16 = API_SCHEME + "api.weatherbit.io/v2.0/forecast/daily";
+
+    // Header
+    public static final String JsonMediaTypeString = "application/json; charset=utf-8";
+
+    // App's filenames constants
+    public static final String APP_SHARED_PREFERENCES_NAME = "com.example.eventlookup.access";
+    public static final String TOKEN_KEY = "app_token";
 
     // Singleton class
     private static AppConf appConfInstance = null;
@@ -49,4 +61,10 @@ public class AppConf {
     public String getWEATHERBIT_GET_FORECAST_16() {
         return WEATHERBIT_GET_FORECAST_16;
     }
+
+    public String getACCOUNT_LOGIN_API_ROUTE() { return ACCOUNT_LOGIN_API_ROUTE; }
+
+    public String getACCOUNT_TOKEN_LOGIN_API_ROUTE() { return ACCOUNT_TOKEN_LOGIN_API_ROUTE; }
+
+    public String getACCOUNT_REGISTER_API_ROUTE() { return ACCOUNT_REGISTER_API_ROUTE; }
 }

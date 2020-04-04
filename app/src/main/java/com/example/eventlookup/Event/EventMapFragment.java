@@ -1,16 +1,12 @@
 package com.example.eventlookup.Event;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -24,17 +20,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 
-import com.example.eventlookup.Event.Adapters.ImageSliderPageAdapter;
-import com.example.eventlookup.Event.POJOs.EventFullPOJO;
 import com.example.eventlookup.Shared.AppConf;
 import com.example.eventlookup.Shared.CacheInterceptor;
 import com.example.eventlookup.Shared.CustomMapView;
 import com.example.eventlookup.Shared.MainThreadOkHttpCallback;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -51,7 +43,6 @@ import com.google.maps.internal.PolylineEncoding;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -62,10 +53,10 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
 import okhttp3.Cache;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -129,7 +120,7 @@ public class EventMapFragment extends Fragment implements OnMapReadyCallback, Lo
         super.onViewCreated( view, savedInstanceState );
 
         // Getting layout components and setting needed listeners
-        prepareLayoutCompononents( view );
+        prepareLayoutComponents( view );
         prepareListeners( view );
 
         Bundle mapViewBundle = null;
@@ -369,7 +360,7 @@ public class EventMapFragment extends Fragment implements OnMapReadyCallback, Lo
         return addressCoordinates;
     }
 
-    private void prepareLayoutCompononents(View view){
+    private void prepareLayoutComponents(View view){
         sourceET =  view.findViewById( R.id.ET_event_directions_source );
         searchBtn = view.findViewById( R.id.event_direction_search );
         mMapView = view.findViewById(R.id.mapView);

@@ -50,7 +50,6 @@ public class EntryActivity extends CommonComponents {
 
         final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById( R.id.nav_host_fragment );
         NavigationUI.setupWithNavController(bottomNavigationView, navHostFragment.getNavController() );
-
     }
 
     private boolean checkAppServices(){

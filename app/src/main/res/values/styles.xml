@@ -9,11 +9,24 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:fontFamily">@font/jaldi</item>
         <item name="fontFamily">@font/jaldi</item>
+        <item name="android:textColor">@color/colorLightBlack</item>
+        <item name="android:editTextColor">@color/colorLightBlack</item>
+        <item name="android:textColorHint">@color/colorLightBlack</item>
     </style>
 
     <style name="FillWidthTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabGravity">fill</item>
         <item name="tabMaxWidth">0dp</item>
+    </style>
+
+    <style name="ThemeButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:background">@drawable/theme_button</item>
+        <item name="android:textColor">@color/colorLightBlack</item>
+        <item name="android:textAllCaps">true</item>'
+        <item name="android:textSize">@dimen/title_size</item>
+        <item name="android:elevation">10dp</item>
     </style>
 
 </resources>

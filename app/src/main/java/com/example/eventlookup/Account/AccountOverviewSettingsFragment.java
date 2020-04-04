@@ -1,6 +1,5 @@
 package com.example.eventlookup.Account;
 
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,26 +7,23 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
-import com.example.eventlookup.Account.Adapters.AccountOverviewAdapter;
 import com.example.eventlookup.R;
 
-
-public class AccountOverviewFragment extends Fragment {
-    private final String TAG = "AccountOverviewFragment";
-    private final int FRAGMENTS_COUNT = 3;
+public class AccountOverviewSettingsFragment extends Fragment {
+    private final String TAG = "AccountOverviewEventsFragment";
 
     // layout vars
     private NavController mNavController;
     private View mThisFrag;
-    private ViewPager2 mViewPager2;
+    private Button mTestButton;
 
-    public AccountOverviewFragment() {
+    public AccountOverviewSettingsFragment() {
         // Required empty public constructor
     }
 
@@ -36,7 +32,7 @@ public class AccountOverviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate( R.layout.fragment_account_overview, container, false );
+        return inflater.inflate( R.layout.fragment_account_overview_settings, container, false );
     }
 
     @Override
@@ -50,18 +46,19 @@ public class AccountOverviewFragment extends Fragment {
 
     private void prepareLayoutComponents(View view){
         mThisFrag = view;
-        mNavController = Navigation.findNavController(view);
-        setupViewPager2( view );
+//        mNavController = Navigation.findNavController( view );
+        mTestButton = view.findViewById( R.id.accountEventTestButton );
     }
 
-    private void setupViewPager2(View view){
-        mViewPager2 = view.findViewById( R.id.VP2_account_overview );
-        mViewPager2.setAdapter( new AccountOverviewAdapter( this, FRAGMENTS_COUNT, mNavController ) );
-        mViewPager2.setNestedScrollingEnabled( true );
-        mViewPager2.setOrientation( ViewPager2.ORIENTATION_HORIZONTAL );
-    }
 
     private void prepareListeners(View view){
-
+        mTestButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("eventId", "1");
+//                Navigation.findNavController( mThisFrag ).navigate( R.id.action_accountOverviewSettingsFragment2_to_eventOverviewFragment, bundle );
+            }
+        } );
     }
 }

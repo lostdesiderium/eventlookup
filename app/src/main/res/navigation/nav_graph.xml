@@ -25,6 +25,7 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             />
+
     </fragment>
 
     <fragment
@@ -85,15 +86,81 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             />
+        <action
+            android:id="@+id/action_action_account_to_accountOverviewFragment"
+            app:destination="@id/accountOverviewFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            />
+        <action
+            android:id="@+id/action_action_account_to_eventOverviewFragment"
+            app:destination="@id/eventOverviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.eventlookup.Account.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_action_account"
+            app:destination="@id/action_account"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            />
+        <action
+            android:id="@+id/action_registerFragment_to_accountOverviewFragment"
+            app:destination="@id/accountOverviewFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            />
+    </fragment>
     <fragment
         android:id="@+id/accountOverviewFragment"
         android:name="com.example.eventlookup.Account.AccountOverviewFragment"
         android:label="fragment_account_overview"
-        tools:layout="@layout/fragment_account_overview" />
+        tools:layout="@layout/fragment_account_overview" >
+        <action
+            android:id="@+id/action_accountOverviewFragment_to_accountOverviewInfoFragment2"
+            app:destination="@id/accountOverviewInfoFragment2"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            />
+        <action
+            android:id="@+id/action_accountOverviewFragment_to_accountOverviewSettingsFragment2"
+            app:destination="@id/accountOverviewSettingsFragment2"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            />
+        <action
+            android:id="@+id/action_accountOverviewFragment_to_accountOverviewEventsFragment3"
+            app:destination="@id/accountOverviewEventsFragment3" />
+        <action
+            android:id="@+id/action_accountOverviewFragment_to_eventOverviewFragment"
+            app:destination="@id/eventOverviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountOverviewInfoFragment2"
+        android:name="com.example.eventlookup.Account.AccountOverviewInfoFragment"
+        android:label="fragment_account_overview_info"
+        tools:layout="@layout/fragment_account_overview_info" />
+    <fragment
+        android:id="@+id/accountOverviewSettingsFragment2"
+        android:name="com.example.eventlookup.Account.AccountOverviewSettingsFragment"
+        android:label="fragment_account_overview_settings"
+        tools:layout="@layout/fragment_account_overview_settings" />
+    <fragment
+        android:id="@+id/accountOverviewEventsFragment3"
+        android:name="com.example.eventlookup.Account.AccountOverviewEventsFragment"
+        android:label="fragment_account_overview_events"
+        tools:layout="@layout/fragment_account_overview_events"/>
 </navigation>

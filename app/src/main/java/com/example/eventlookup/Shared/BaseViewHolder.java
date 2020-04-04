@@ -1,4 +1,4 @@
-package com.example.eventlookup;
+package com.example.eventlookup.Shared;
 
 import android.view.View;
 import androidx.recyclerview.widget.RecyclerView;
