@@ -50,7 +50,7 @@ import okhttp3.Request;
 
 
 public class EventListFragment extends Fragment {
-    private final String TAG = "EventList";
+    private final String TAG = "EventListFragment";
     private final int UPCOMING_EVENTS = 0;
     private final int FINISHED_EVENTS = 1;
 

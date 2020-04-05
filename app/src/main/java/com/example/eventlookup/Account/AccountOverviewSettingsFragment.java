@@ -21,7 +21,6 @@ public class AccountOverviewSettingsFragment extends Fragment {
     // layout vars
     private NavController mNavController;
     private View mThisFrag;
-    private Button mTestButton;
 
     public AccountOverviewSettingsFragment() {
         // Required empty public constructor
@@ -46,19 +45,11 @@ public class AccountOverviewSettingsFragment extends Fragment {
 
     private void prepareLayoutComponents(View view){
         mThisFrag = view;
-//        mNavController = Navigation.findNavController( view );
-        mTestButton = view.findViewById( R.id.accountEventTestButton );
+        mNavController = Navigation.findNavController( getParentFragment().getView() );
     }
 
 
-    private void prepareListeners(View view){
-        mTestButton.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString("eventId", "1");
-//                Navigation.findNavController( mThisFrag ).navigate( R.id.action_accountOverviewSettingsFragment2_to_eventOverviewFragment, bundle );
-            }
-        } );
+    private void prepareListeners(View view) {
+
     }
 }

@@ -7,30 +7,50 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.viewpager2.widget.ViewPager2;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import okhttp3.OkHttpClient;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
-import com.example.eventlookup.Account.Adapters.AccountOverviewAdapter;
-import com.example.eventlookup.Event.EventOverviewFragment;
+import com.example.eventlookup.Account.Adapters.AccountEventsListAdapter;
+import com.example.eventlookup.Account.POJOs.AccountEventPOJO;
 import com.example.eventlookup.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
 
 
 public class AccountOverviewEventsFragment extends Fragment {
     private final String TAG = "AccountOverviewEventsFragment";
 
-    // layout vars
+    // application classes
+
+    // framework components
     private NavController mNavController;
     private View mThisFrag;
-    private Button mTestButton;
+    private RecyclerView mRecyclerView;
+    private LinearLayoutManager mLinearLayoutManager;
+    private TabLayout mTabLayout;
+    private FrameLayout mProgressBarHolder;
+    private OkHttpClient mOkHttpClient;
+
+    // layout vars
+    private final int UPCOMING_EVENTS = 0;
+    private final int FINISHED_EVENTS = 1;
+    private AccountEventsListAdapter mEventAdapter;
+    private ArrayList<AccountEventPOJO> mEventsList;
+    private FloatingActionButton mBtnEventRemove;
 
     public AccountOverviewEventsFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,25 +64,33 @@ public class AccountOverviewEventsFragment extends Fragment {
         super.onViewCreated( view, savedInstanceState );
 
         prepareLayoutComponents( view );
+        //        mProgressBarHolder.setVisibility( View.VISIBLE );
         prepareListeners( view );
-    }
+        setupRecyclerView();
 
+    }
 
     private void prepareLayoutComponents(View view){
         mThisFrag = view;
-//        mNavController = Navigation.findNavController( view );
-        mTestButton = view.findViewById( R.id.accountEventTestButton );
+        mNavController = Navigation.findNavController( getParentFragment().getView() );
+        mRecyclerView = view.findViewById( R.id.RVL_account_events_list );
     }
-
 
     private void prepareListeners(View view){
-        mTestButton.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString("eventId", "1");
-                Navigation.findNavController( mThisFrag ).navigate( R.id.action_accountOverviewFragment_to_eventOverviewFragment, bundle );
-            }
-        } );
+
     }
+
+    private void setupRecyclerView(){
+        mLinearLayoutManager = new LinearLayoutManager( getParentFragment().getContext() );
+        mLinearLayoutManager.setOrientation( RecyclerView.VERTICAL );
+        mRecyclerView.setLayoutManager( mLinearLayoutManager );
+        mRecyclerView.setItemAnimator( new DefaultItemAnimator() );
+
+        mEventAdapter = new AccountEventsListAdapter(  );
+        mEventAdapter.addItems( mEventsList );
+        mRecyclerView.setAdapter( mEventAdapter );
+
+//        fetchDataForAdapter();
+    }
+
 }

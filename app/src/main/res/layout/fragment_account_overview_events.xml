@@ -1,18 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:id="@+id/CL_event_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
     >
 
-    <Button
-        android:id="@+id/accountEventTestButton"
+<!--    <include layout="@layout/frame_layout_loader"/>-->
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/TBL_events_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Go to event with id 1" />
+        style="@style/FillWidthTabLayout"
+        >
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/TabI_account_overview_events_upcoming"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/account_overview_events_going"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/TabI_account_overview_events_finished"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/account_overview_events_interested"/>
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?android:actionBarSize" >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RVL_account_events_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </LinearLayout>
