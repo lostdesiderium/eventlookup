@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.eventlookup.Account.POJOs.AccountOverviewInfoPOJO;
 import com.example.eventlookup.R;
+import com.example.eventlookup.Shared.APIRequest;
 import com.example.eventlookup.Shared.AppConf;
 import com.example.eventlookup.Shared.CacheInterceptor;
 import com.example.eventlookup.Shared.MainThreadOkHttpCallback;
@@ -54,6 +55,7 @@ public class AccountOverviewInfoFragment extends Fragment {
 
     // application classes
     private Utils mUtils;
+    private APIRequest apiRequest;
 
     // framework components
     private OkHttpClient okHttpClient;
@@ -114,6 +116,7 @@ public class AccountOverviewInfoFragment extends Fragment {
         mETBio = view.findViewById( R.id.ET_account_overview_bio );
         mBtnSettingsOverview = view.findViewById( R.id.FAB_account_overview_settings );
         mBtnEventsOverview = view.findViewById( R.id.FAB_account_overview_events );
+        apiRequest = new APIRequest( getContext() );
     }
 
     private void prepareListeners(View view){
@@ -177,27 +180,12 @@ public class AccountOverviewInfoFragment extends Fragment {
 
 
     private void fetchUserData(){
-        File httpCacheDirectory = new File(getContext().getCacheDir(), "http-cache");
-        int cacheSize = 10 * 1024 * 1024;
-        Cache cache = new Cache( httpCacheDirectory, cacheSize );
-
-        okHttpClient = new OkHttpClient.Builder(  ).addNetworkInterceptor( new CacheInterceptor() )
-                .cache( cache )
-                .build();
+        okHttpClient = apiRequest.generateOkHttpClient();
 
         AppConf apiConf = AppConf.getInstance();
         String getUserDataRoute = apiConf.getACCOUNT_GET_USER_API_ROUTE() + "/" + mUtils.getUserId( getContext() );
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(getUserDataRoute)
-                .newBuilder();
-
-        String url = urlBuilder.build()
-                .toString();
-
-        Request request = new Request.Builder(  )
-                .header("Authorization", "Bearer " + mUtils.getAppToken( getContext() ))
-                .url( url )
-                .build();
+        Request request = apiRequest.getRequestObject( getUserDataRoute, true, false, "", null );
 
         okHttpClient.newCall(request).enqueue( new MainThreadOkHttpCallback() {
 
@@ -298,19 +286,7 @@ public class AccountOverviewInfoFragment extends Fragment {
         AppConf apiConf = AppConf.getInstance();
         String updateUserImage = apiConf.getACCOUNT_UPLOAD_IMAGE_API_ROUTE();
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(updateUserImage)
-                .newBuilder();
-
-        String url = urlBuilder.build()
-                .toString();
-
-        RequestBody body = RequestBody.create(formJsonObject().toString(), mMediaType );
-
-        Request request = new Request.Builder(  )
-                .header("Authorization", "Bearer " + mUtils.getAppToken( getContext() ))
-                .url( url )
-                .post( body )
-                .build();
+        Request request = apiRequest.getRequestObject( updateUserImage, true, true, formJsonObject().toString(), mMediaType );
 
         okHttpClient.newCall(request).enqueue( new MainThreadOkHttpCallback() {
 

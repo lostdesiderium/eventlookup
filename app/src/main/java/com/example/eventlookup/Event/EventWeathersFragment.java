@@ -21,6 +21,7 @@ import com.example.eventlookup.Event.Adapters.ImageSliderPageAdapter;
 import com.example.eventlookup.Event.POJOs.EventFullPOJO;
 import com.example.eventlookup.Event.POJOs.EventWeatherPOJO;
 import com.example.eventlookup.R;
+import com.example.eventlookup.Shared.APIRequest;
 import com.example.eventlookup.Shared.AppConf;
 import com.example.eventlookup.Shared.CacheInterceptor;
 import com.example.eventlookup.Shared.MainThreadOkHttpCallback;
@@ -54,14 +55,19 @@ public class EventWeathersFragment extends Fragment {
     private final String TAG = "EventWeathersFragment";
     private final int MAX_DAYS_FORECAST = 16;
 
-    private View mThisView;
+    // application classes
+    private APIRequest apiRequest;
+
+    // framework components
     private LinearLayout linearLayoutParent;
-    private FrameLayout progressBarHolder;
     private OkHttpClient okHttpClient;
+
+    // layout vars
+    private FrameLayout progressBarHolder;
     private ConstraintLayout notAvailableCL;
     private AlphaAnimation inAlphaAnimation;
     private AlphaAnimation outAlphaAnimation;
-
+    private View mThisView;
     private String _eventId;
     private Date mEventStartDate;
     private int mEventDaysActive;
@@ -70,6 +76,7 @@ public class EventWeathersFragment extends Fragment {
     private double mEventLng;
     private ArrayList<EventWeatherPOJO> mWeatherForecasts;
     private Date currentDate = new Date();
+
 
     public EventWeathersFragment() {
         // Required empty public constructor
@@ -126,37 +133,17 @@ public class EventWeathersFragment extends Fragment {
     }
 
     private void prepareCommonVariables(){
-        File httpCacheDirectory = new File(getContext().getCacheDir(), "http-cache");
-        int cacheSize = 10 * 1024 * 1024;
-        Cache cache = new Cache( httpCacheDirectory, cacheSize );
-
-        okHttpClient = new OkHttpClient.Builder(  ).addNetworkInterceptor( new CacheInterceptor() )
-                .cache( cache )
-                .build();
         mWeatherForecasts = new ArrayList<>();
+        apiRequest = new APIRequest( getContext() );
     }
 
     private void getEventDetailedInfo() throws Exception {
-        File httpCacheDirectory = new File(getContext().getCacheDir(), "http-cache");
-        int cacheSize = 10 * 1024 * 1024;
-        Cache cache = new Cache( httpCacheDirectory, cacheSize );
-
-        okHttpClient = new OkHttpClient.Builder(  ).addNetworkInterceptor( new CacheInterceptor() )
-                .cache( cache )
-                .build();
+        okHttpClient = apiRequest.getOkHttpClientObject( 5 );
 
         AppConf apiConf = AppConf.getInstance();
         String eventInfoRoute = apiConf.getEventGetEventDetailedApiRoute() + _eventId;
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(eventInfoRoute)
-                .newBuilder();
-
-        String url = urlBuilder.build()
-                .toString();
-
-        final Request request = new Request.Builder(  )
-                .url( url )
-                .build();
+        Request request = apiRequest.getRequestObject( eventInfoRoute, false, false, "", null );
 
         okHttpClient.newCall(request).enqueue( new MainThreadOkHttpCallback() {
 
@@ -194,20 +181,14 @@ public class EventWeathersFragment extends Fragment {
     }
 
     private void getWeathersForecast(){
+        okHttpClient = apiRequest.generateOkHttpClient();
+
         AppConf apiConf = AppConf.getInstance();
         String coordinates = "?lat=" + mEventLat + "&lon=" + mEventLng;
         String apiKey = "&key=" + AppConf.WEATHERBIT_API_KEY;
         String weatherbitUrl = apiConf.getWEATHERBIT_GET_FORECAST_16() + coordinates + apiKey;
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(weatherbitUrl)
-                .newBuilder();
-
-        String url = urlBuilder.build()
-                .toString();
-
-        final Request request = new Request.Builder(  )
-                .url( url )
-                .build();
+        Request request = apiRequest.getRequestObject( weatherbitUrl, false, false, "", null );
 
         okHttpClient.newCall(request).enqueue( new MainThreadOkHttpCallback() {
 

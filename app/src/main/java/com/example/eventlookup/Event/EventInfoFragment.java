@@ -30,6 +30,7 @@ import com.example.eventlookup.Event.POJOs.UserEventPOJO;
 import com.example.eventlookup.Event.Adapters.ImageSliderPageAdapter;
 import com.example.eventlookup.Event.POJOs.EventFullPOJO;
 import com.example.eventlookup.R;
+import com.example.eventlookup.Shared.APIRequest;
 import com.example.eventlookup.Shared.AppConf;
 import com.example.eventlookup.Shared.CacheInterceptor;
 import com.example.eventlookup.Shared.MainThreadOkHttpCallback;
@@ -51,9 +52,11 @@ public class EventInfoFragment extends Fragment {
     private final String TAG = "EventInfoFrag";
     private final int INTERESTED = 0;
     private final int GOING = 1;
+    private final int DEACTIVATION_TIME_MS = 1000;
 
     // application classes
-    Utils mUtils;
+    private Utils mUtils;
+    private APIRequest apiRequest;
 
     // framework components
     private ViewPager2 imageViewPager;
@@ -116,6 +119,7 @@ public class EventInfoFragment extends Fragment {
 
         sliderPageAdapter = new ImageSliderPageAdapter( _thisContext );
         imageViewPager.setAdapter( sliderPageAdapter);
+        apiRequest = new APIRequest( _thisContext );
     }
 
     private void prepareListeners(View view){
@@ -187,27 +191,12 @@ public class EventInfoFragment extends Fragment {
       "Tickets": []
     * */
     private void getEventDetailedInfo() throws Exception {
-        File httpCacheDirectory = new File(getContext().getCacheDir(), "http-cache");
-        int cacheSize = 10 * 1024 * 1024;
-        Cache cache = new Cache( httpCacheDirectory, cacheSize );
-
-//        okHttpClient = new OkHttpClient.Builder(  ).addNetworkInterceptor( new CacheInterceptor() )
-//                .cache( cache )
-//                .build();
         okHttpClient = new OkHttpClient(  );
 
         AppConf apiConf = AppConf.getInstance();
         String eventInfoRoute = apiConf.getEventGetEventDetailedApiRoute() + _eventId;
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(eventInfoRoute)
-                .newBuilder();
-
-        String url = urlBuilder.build()
-                .toString();
-
-        final Request request = new Request.Builder(  )
-                .url( url )
-                .build();
+        Request request = apiRequest.getRequestObject( eventInfoRoute, false, false, "", null );
 
         okHttpClient.newCall(request).enqueue( new MainThreadOkHttpCallback() {
 
@@ -341,24 +330,12 @@ public class EventInfoFragment extends Fragment {
      * @param action GOING or INTERESTED
      */
     private void markUserEvent(final int action){
-        okHttpClient = new OkHttpClient();
+        okHttpClient = apiRequest.generateOkHttpClient();
 
         AppConf apiConf = AppConf.getInstance();
         String markEventUrl = apiConf.getEVENT_MARK_USER_EVENT();
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(markEventUrl)
-                .newBuilder();
-
-        String url = urlBuilder.build()
-                .toString();
-
-        RequestBody body = RequestBody.create(formJsonObjectForUserEvent(action), mMediaType );
-
-        Request request = new Request.Builder(  )
-                .header("Authorization", "Bearer " + mUtils.getAppToken( getContext() ))
-                .url( url )
-                .post( body )
-                .build();
+        Request request = apiRequest.getRequestObject( markEventUrl, true, true, formJsonObjectForUserEvent(action), mMediaType );
 
         okHttpClient.newCall(request).enqueue( new MainThreadOkHttpCallback() {
 
@@ -414,7 +391,7 @@ public class EventInfoFragment extends Fragment {
             default:
         }
 
-        deactivateMarkButtonsForShortTime( 1000 ); // deactivating buttons for 1second for antispam to server
+        deactivateMarkButtonsForShortTime( DEACTIVATION_TIME_MS ); // deactivating buttons for 1second for antispam to server
     }
 
     private void deactivateMarkButtonsForShortTime(int millis){

@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import com.example.eventlookup.Event.Adapters.EventAdapter;
 import com.example.eventlookup.Event.POJOs.EventListItemPOJO;
 import com.example.eventlookup.R;
+import com.example.eventlookup.Shared.APIRequest;
 import com.example.eventlookup.Shared.AppConf;
 import com.example.eventlookup.Shared.CacheInterceptor;
 import com.example.eventlookup.Shared.MainThreadOkHttpCallback;
@@ -54,16 +55,20 @@ public class EventListFragment extends Fragment {
     private final int UPCOMING_EVENTS = 0;
     private final int FINISHED_EVENTS = 1;
 
-    private RecyclerView recyclerView;
-    private EventAdapter eventAdapter;
+    // application classes
+    private APIRequest apiRequest;
+
+    // framework components
     private LinearLayoutManager linearLayoutManager;
-    private View mThisFragmentView;
-    private TabLayout mTabLayout;
-
     private OkHttpClient okHttpClient;
-    private ArrayList<EventListItemPOJO> eventsList;
-    private ArrayList<String> eventsTitles;
 
+    // layout vars
+    private EventAdapter eventAdapter;
+    private RecyclerView recyclerView;
+    private TabLayout mTabLayout;
+    private View mThisFragmentView;
+    private ArrayList<String> eventsTitles;
+    private ArrayList<EventListItemPOJO> eventsList;
     private AlphaAnimation inAlphaAnimation;
     private AlphaAnimation outAlphaAnimation;
     private FrameLayout progressBarHolder;
@@ -121,28 +126,12 @@ public class EventListFragment extends Fragment {
     }
 
     private void getEventListFromApi() throws Exception {
-        File httpCacheDirectory = new File(getContext().getCacheDir(), "http-cache");
-        int cacheSize = 10 * 1024 * 1024;
-        Cache cache = new Cache( httpCacheDirectory, cacheSize );
-
-        okHttpClient = new OkHttpClient.Builder(  ).addNetworkInterceptor( new CacheInterceptor() )
-                .cache( cache )
-                .build();
-
-//        final ArrayList<EventListItemPOJO> eventsList = new ArrayList<>();
+        okHttpClient = apiRequest.getOkHttpClientObject( 5 );
 
         AppConf apiConf = AppConf.getInstance();
         String eventsListApiRoute = apiConf.getEventGetListApiRoute();
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(eventsListApiRoute)
-                .newBuilder();
-
-        String url = urlBuilder.build()
-                .toString();
-
-        Request request = new Request.Builder(  )
-                .url( url )
-                .build();
+        Request request = apiRequest.getRequestObject( eventsListApiRoute, false, false, "", null );
 
         okHttpClient.newCall(request).enqueue( new MainThreadOkHttpCallback() {
 
@@ -194,6 +183,7 @@ public class EventListFragment extends Fragment {
         mActionSearchContent = view.findViewById( R.id.IV_event_list_action_search );
         mACTVSearch = view.findViewById( R.id.ACTV_events_list_search );
         mTabLayout = view.findViewById( R.id.TBL_events_tab_layout );
+        apiRequest = new APIRequest( getContext() );
     }
 
     private void prepareListeners(View view){

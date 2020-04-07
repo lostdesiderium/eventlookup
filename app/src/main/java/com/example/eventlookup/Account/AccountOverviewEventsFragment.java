@@ -28,6 +28,7 @@ import com.example.eventlookup.Account.Adapters.AccountEventsListAdapter;
 import com.example.eventlookup.Account.POJOs.AccountEventPOJO;
 import com.example.eventlookup.Account.POJOs.AccountOverviewInfoPOJO;
 import com.example.eventlookup.R;
+import com.example.eventlookup.Shared.APIRequest;
 import com.example.eventlookup.Shared.AppConf;
 import com.example.eventlookup.Shared.CacheInterceptor;
 import com.example.eventlookup.Shared.MainThreadOkHttpCallback;
@@ -52,6 +53,8 @@ public class AccountOverviewEventsFragment extends Fragment
     private final int GOING_EVENTS = 0; // Matching with TabLayout Tab's position
 
     // application classes
+    private APIRequest apiRequest;
+    private Utils mUtils;
 
     // framework components
     private NavController mNavController;
@@ -70,7 +73,6 @@ public class AccountOverviewEventsFragment extends Fragment
     private ArrayList<AccountEventPOJO> mEventsList;
     private FloatingActionButton mBtnEventRemove;
     private OkHttpClient okHttpClient;
-    private Utils mUtils;
     private AccountEventsListAdapter.AELACallback mAdapterCallback;
 
     public AccountOverviewEventsFragment() {
@@ -102,6 +104,7 @@ public class AccountOverviewEventsFragment extends Fragment
         mProgressBarHolder = view.findViewById( R.id.FL_PB_holder_events_list );
         mTabLayout = view.findViewById( R.id.TBL_account_events_tab_layout );
         mMediaType = MediaType.parse(AppConf.JsonMediaTypeString);
+        apiRequest = new APIRequest( getContext() );
     }
 
     private void prepareListeners(View view){
@@ -162,27 +165,12 @@ public class AccountOverviewEventsFragment extends Fragment
     }
 
     private void fetchUserData(){
-        File httpCacheDirectory = new File(getContext().getCacheDir(), "http-cache");
-        int cacheSize = 10 * 1024 * 1024;
-        Cache cache = new Cache( httpCacheDirectory, cacheSize );
-
-        okHttpClient = new OkHttpClient.Builder(  ).addNetworkInterceptor( new CacheInterceptor() )
-                .cache( cache )
-                .build();
+        okHttpClient = apiRequest.generateOkHttpClient();
 
         AppConf apiConf = AppConf.getInstance();
         String getUserDataRoute = apiConf.getACCOUNT_GET_USER_API_ROUTE() + "/" + mUtils.getUserId( getContext() );
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(getUserDataRoute)
-                .newBuilder();
-
-        String url = urlBuilder.build()
-                .toString();
-
-        Request request = new Request.Builder(  )
-                .header("Authorization", "Bearer " + mUtils.getAppToken( getContext() ))
-                .url( url )
-                .build();
+        Request request = apiRequest.getRequestObject( getUserDataRoute, true, false, "", null );
 
         okHttpClient.newCall(request).enqueue( new MainThreadOkHttpCallback() {
 
@@ -258,30 +246,12 @@ public class AccountOverviewEventsFragment extends Fragment
 
     @Override
     public void removeEventApiCall(final String eventId) {
-        File httpCacheDirectory = new File(getContext().getCacheDir(), "http-cache");
-        int cacheSize = 10 * 1024 * 1024;
-        Cache cache = new Cache( httpCacheDirectory, cacheSize );
-
-        okHttpClient = new OkHttpClient.Builder(  ).addNetworkInterceptor( new CacheInterceptor() )
-                .cache( cache )
-                .build();
+        okHttpClient = apiRequest.generateOkHttpClient();
 
         AppConf apiConf = AppConf.getInstance();
         String getUserDataRoute = apiConf.getACCOUNT_REMOVE_USER_EVENT_API_ROUTE();
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(getUserDataRoute)
-                .newBuilder();
-
-        String url = urlBuilder.build()
-                .toString();
-
-        RequestBody body = RequestBody.create(formJsonObjectForLogin(eventId).toString(), mMediaType );
-
-        Request request = new Request.Builder(  )
-                .header("Authorization", "Bearer " + mUtils.getAppToken( getContext() ))
-                .post( body )
-                .url( url )
-                .build();
+        Request request = apiRequest.getRequestObject( getUserDataRoute, true, true, formJsonObjectForLogin(eventId).toString(), mMediaType );
 
         okHttpClient.newCall(request).enqueue( new MainThreadOkHttpCallback() {
 

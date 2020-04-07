@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.eventlookup.R;
+import com.example.eventlookup.Shared.APIRequest;
 import com.example.eventlookup.Shared.AppConf;
 import com.example.eventlookup.Shared.CacheInterceptor;
 import com.example.eventlookup.Shared.MainThreadOkHttpCallback;
@@ -39,6 +40,7 @@ public class RegisterFragment extends Fragment {
 
     // application classes
     private Utils mUtils;
+    private APIRequest apiRequest;
 
     // framework components
     private NavController mNavController;
@@ -77,6 +79,7 @@ public class RegisterFragment extends Fragment {
         mMediaType = MediaType.parse(AppConf.JsonMediaTypeString);
         mUtils = new Utils();
         mSharedPrefs = mUtils.getAppSharedPreferences( getContext() );
+        apiRequest = new APIRequest( getContext() );
     }
 
     private void prepareListeners(View view){
@@ -111,29 +114,12 @@ public class RegisterFragment extends Fragment {
     }
 
     private void register() {
-        File httpCacheDirectory = new File(getContext().getCacheDir(), "http-cache");
-        int cacheSize = 10 * 1024 * 1024;
-        Cache cache = new Cache( httpCacheDirectory, cacheSize );
-
-        okHttpClient = new OkHttpClient.Builder(  ).addNetworkInterceptor( new CacheInterceptor() )
-                .cache( cache )
-                .build();
+        okHttpClient = apiRequest.generateOkHttpClient();
 
         AppConf apiConf = AppConf.getInstance();
         String registerApiRoute = apiConf.getACCOUNT_REGISTER_API_ROUTE();
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(registerApiRoute)
-                .newBuilder();
-
-        String url = urlBuilder.build()
-                .toString();
-
-        RequestBody body = RequestBody.create(formJsonObjectForLogin().toString(), mMediaType );
-
-        Request request = new Request.Builder(  )
-                .url( url )
-                .post( body )
-                .build();
+        Request request = apiRequest.getRequestObject( registerApiRoute, false, true, formJsonObjectForLogin().toString(), mMediaType );
 
         okHttpClient.newCall(request).enqueue( new MainThreadOkHttpCallback() {
 

@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 
+import com.example.eventlookup.Shared.APIRequest;
 import com.example.eventlookup.Shared.AppConf;
 import com.example.eventlookup.Shared.CacheInterceptor;
 import com.example.eventlookup.Shared.CustomMapView;
@@ -96,6 +97,7 @@ public class EventMapFragment extends Fragment implements OnMapReadyCallback, Lo
     private AlphaAnimation inAlphaAnimation;
     private AlphaAnimation outAlphaAnimation;
     private FrameLayout progressBarHolder;
+    private APIRequest apiRequest;
 
     private EditText sourceET = null;
     private Button searchBtn = null;
@@ -187,27 +189,12 @@ public class EventMapFragment extends Fragment implements OnMapReadyCallback, Lo
 
     // pull event location from db
     private void getEventDetailedInfo() throws Exception {
-        File httpCacheDirectory = new File(getContext().getCacheDir(), "http-cache");
-        int cacheSize = 10 * 1024 * 1024;
-        Cache cache = new Cache( httpCacheDirectory, cacheSize );
-
-        okHttpClient = new OkHttpClient.Builder(  ).addNetworkInterceptor( new CacheInterceptor() )
-                .cache( cache )
-                .build();
-//        okHttpClient = new OkHttpClient(  );
+        okHttpClient = apiRequest.getOkHttpClientObject( 30 );
 
         AppConf apiConf = AppConf.getInstance();
         String eventInfoRoute = apiConf.getEventGetEventDetailedApiRoute() + _eventId;
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(eventInfoRoute)
-                .newBuilder();
-
-        String url = urlBuilder.build()
-                .toString();
-
-        final Request request = new Request.Builder(  )
-                .url( url )
-                .build();
+        Request request = apiRequest.getRequestObject( eventInfoRoute, false, false, "", null );
 
         okHttpClient.newCall(request).enqueue( new MainThreadOkHttpCallback() {
 
@@ -365,6 +352,7 @@ public class EventMapFragment extends Fragment implements OnMapReadyCallback, Lo
         searchBtn = view.findViewById( R.id.event_direction_search );
         mMapView = view.findViewById(R.id.mapView);
         progressBarHolder = view.findViewById( R.id.FL_PB_holder_events_list );
+        apiRequest = new APIRequest( getContext() );
     }
 
     private void prepareListeners(final View fragmentView){

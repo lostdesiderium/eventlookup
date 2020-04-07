@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.eventlookup.R;
+import com.example.eventlookup.Shared.APIRequest;
 import com.example.eventlookup.Shared.AppConf;
 import com.example.eventlookup.Shared.CacheInterceptor;
 import com.example.eventlookup.Shared.MainThreadOkHttpCallback;
@@ -40,6 +41,7 @@ public class LoginFragment extends Fragment {
 
     // application classes
     private Utils mUtils;
+    private APIRequest apiRequest;
 
     // framework components
     private NavController mNavController;
@@ -86,6 +88,7 @@ public class LoginFragment extends Fragment {
         mMediaType = MediaType.parse(AppConf.JsonMediaTypeString);
         mUtils = new Utils();
         mSharedPrefs = mUtils.getAppSharedPreferences( getContext() );
+        apiRequest = new APIRequest( getContext() );
     }
 
     private void prepareListeners(View view){
@@ -133,29 +136,12 @@ public class LoginFragment extends Fragment {
     }
 
     private void loginWithCreds() {
-        File httpCacheDirectory = new File(getContext().getCacheDir(), "http-cache");
-        int cacheSize = 10 * 1024 * 1024;
-        Cache cache = new Cache( httpCacheDirectory, cacheSize );
-
-        okHttpClient = new OkHttpClient.Builder(  ).addNetworkInterceptor( new CacheInterceptor() )
-                .cache( cache )
-                .build();
+        okHttpClient = apiRequest.getOkHttpClientObject( 30 );
 
         AppConf apiConf = AppConf.getInstance();
         String loginRoute = apiConf.getACCOUNT_LOGIN_API_ROUTE();
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(loginRoute)
-                .newBuilder();
-
-        String url = urlBuilder.build()
-                .toString();
-
-        RequestBody body = RequestBody.create(formJsonObjectForLogin().toString(), mMediaType );
-
-        Request request = new Request.Builder(  )
-                .url( url )
-                .post( body )
-                .build();
+        Request request = apiRequest.getRequestObject( loginRoute, false, true, formJsonObjectForLogin().toString(), mMediaType );
 
         okHttpClient.newCall(request).enqueue( new MainThreadOkHttpCallback() {
 
@@ -183,30 +169,12 @@ public class LoginFragment extends Fragment {
     }
 
     private void loginWithToken() {
-        File httpCacheDirectory = new File(getContext().getCacheDir(), "http-cache");
-        int cacheSize = 10 * 1024 * 1024;
-        Cache cache = new Cache( httpCacheDirectory, cacheSize );
-
-        okHttpClient = new OkHttpClient.Builder(  ).addNetworkInterceptor( new CacheInterceptor() )
-                .cache( cache )
-                .build();
+        okHttpClient = apiRequest.generateOkHttpClient(  );
 
         AppConf apiConf = AppConf.getInstance();
         String loginRoute = apiConf.getACCOUNT_TOKEN_LOGIN_API_ROUTE();
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(loginRoute)
-                .newBuilder();
-
-        String url = urlBuilder.build()
-                .toString();
-
-        RequestBody body = RequestBody.create("", null );
-
-        Request request = new Request.Builder(  )
-                .header("Authorization", "Bearer " + mUtils.getAppToken( getContext() ))
-                .url( url )
-                .post( body )
-                .build();
+        Request request = apiRequest.getRequestObject( loginRoute, true, true, "", null );
 
         okHttpClient.newCall(request).enqueue( new MainThreadOkHttpCallback() {
 

@@ -58,7 +58,7 @@ public class EventOverviewFragment extends Fragment {
         fragmentsPager = view.findViewById( R.id.VP2_event_overview );
         fragmentsPager.setAdapter( new EventOverviewAdapter( this, FRAGMENTS_COUNT, tabLayout, getArguments().getString( "eventId" ) ) );
         fragmentsPager.setNestedScrollingEnabled( true );
-        fragmentsPager.setOrientation( ViewPager2.ORIENTATION_VERTICAL );
+        fragmentsPager.setOrientation( ViewPager2.ORIENTATION_HORIZONTAL );
 
         tabLayout = view.findViewById( R.id.TBL_events_overview_tab_layout );
 
