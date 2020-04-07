@@ -9,10 +9,10 @@
     android:orientation="vertical"
     >
 
-<!--    <include layout="@layout/frame_layout_loader"/>-->
+    <include layout="@layout/frame_layout_loader"/>
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/TBL_events_tab_layout"
+        android:id="@+id/TBL_account_events_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/FillWidthTabLayout"

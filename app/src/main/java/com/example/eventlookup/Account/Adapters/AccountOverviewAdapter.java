@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
+
 import com.example.eventlookup.R;
 
 public class AccountOverviewAdapter extends FragmentStateAdapter {
@@ -15,6 +17,7 @@ public class AccountOverviewAdapter extends FragmentStateAdapter {
     private int mFragmentsCount;
     private String mEventId;
     private NavController mNavController;
+    private ViewPager2 mViewPager2;
 
     public AccountOverviewAdapter(@NonNull Fragment fragment, int fragmentsCount, NavController navController) {
         super( fragment );

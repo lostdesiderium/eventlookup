@@ -43,7 +43,6 @@
                     android:layout_height="150dp"
                     app:cardBackgroundColor="@android:color/transparent"
                     app:cardCornerRadius="75dp"
-                    app:cardElevation="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintStart_toStartOf="parent"
@@ -136,7 +135,6 @@
                     android:id="@+id/FAB_account_overview_events"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/main_background_gradient"
                     android:clickable="true"
                     android:focusable="true"
                     app:layout_constraintEnd_toStartOf="@+id/cardView"
@@ -153,7 +151,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/cardView"
                     app:layout_constraintTop_toTopOf="@+id/guideline4"
-                    android:background="@drawable/main_background_gradient"
                     app:srcCompat="@drawable/gear_white" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

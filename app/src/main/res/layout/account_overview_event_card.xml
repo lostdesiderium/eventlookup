@@ -46,7 +46,7 @@
             android:singleLine="false"
             android:text="@string/event_title"
             android:textColor="@color/colorLightBlack"
-            android:textSize="@dimen/big_title_size"
+            android:textSize="@dimen/title_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/FAB_account_overview_event_remove"
             app:layout_constraintHorizontal_bias="0.0"

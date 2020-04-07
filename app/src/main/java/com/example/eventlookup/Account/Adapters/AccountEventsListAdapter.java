@@ -1,5 +1,6 @@
 package com.example.eventlookup.Account.Adapters;
 
+import android.os.Bundle;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,15 +28,28 @@ public class AccountEventsListAdapter extends RecyclerView.Adapter<BaseViewHolde
     public static final int VIEW_TYPE_EMPTY = 0;
     public static final int VIEW_TYPE_NORMAL = 1;
 
-    private Callback mCallback;
+    private static AELACallback mCallback;
+    protected View mParentView;
     public List<AccountEventPOJO> mEventsList;
 
-    public void setCallback(Callback callback){
+    // Interface for callback
+    public interface AELACallback {
+        void onEmptyViewRetryClick();
+        void removeEventApiCall(String eventId);
+    }
+    // Interface for callback
+
+    public void setCallback(AELACallback callback)
+    {
         this.mCallback = callback;
     }
 
     public void addItems(List<AccountEventPOJO> list){
         this.mEventsList = list;
+    }
+
+    public void setParentView(View view){
+        mParentView = view;
     }
 
     @NonNull
@@ -76,12 +91,6 @@ public class AccountEventsListAdapter extends RecyclerView.Adapter<BaseViewHolde
         }
     }
 
-    // Interface for callback
-    public interface Callback {
-        void onEmptyViewRetryClick();
-    }
-    // Interface for callback
-
     public class ViewHolder extends BaseViewHolder {
         @BindView(R.id.TV_account_event_title)
         TextView mEventTitle;
@@ -122,10 +131,21 @@ public class AccountEventsListAdapter extends RecyclerView.Adapter<BaseViewHolde
             mBtnEventRemove.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    mCallback.removeEventApiCall(mEvent.getmEventId());
+                }
+            } );
 
+            // Here goes item event listener
+            itemView.setOnClickListener( new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("eventId", mEvent.getmEventId());
+                    Navigation.findNavController( mParentView ).navigate( R.id.action_accountOverviewFragment_to_eventOverviewFragment, bundle );
                 }
             } );
         }
+
     }
 
     public class EmptyViewHolder extends BaseViewHolder{

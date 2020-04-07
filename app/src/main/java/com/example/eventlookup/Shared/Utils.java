@@ -60,4 +60,12 @@ public class Utils {
         SharedPreferences prefs = getAppSharedPreferences( context );
         prefs.edit().putString( AppConf.TOKEN_KEY, token).apply();
     }
+    public void writeUserIdToSharedPreferences(Context context, String id){
+        SharedPreferences prefs = getAppSharedPreferences( context );
+        if(prefs != null)
+            prefs.edit().putString( AppConf.USER_ID, id ).apply();
+    }
+    public String getUserId(Context context){
+        return getAppSharedPreferences( context ).getString( AppConf.USER_ID, "" );
+    }
 }

@@ -20,11 +20,18 @@ public class AppConf {
     private static final String API_BASE = "10.0.2.2:19422/api/";
 
     // API Routes
-    private final String EVENT_GET_LIST_API_ROUTE =  API_SCHEME +  API_BASE + "event";
-    private final String EVENT_GET_EVENT_DETAILED_API_ROUTE =  API_SCHEME +  API_BASE + "event/";
-    private final String ACCOUNT_LOGIN_API_ROUTE = API_SCHEME + API_BASE + "users/login";
-    private final String ACCOUNT_TOKEN_LOGIN_API_ROUTE = API_SCHEME + API_BASE + "users/token-login";
-    private final String ACCOUNT_REGISTER_API_ROUTE = API_SCHEME + API_BASE + "users/register";
+    private final String HOST_URL = API_SCHEME + API_BASE;
+    private final String EVENT_GET_LIST_API_ROUTE = HOST_URL + "event";
+    private final String EVENT_GET_EVENT_DETAILED_API_ROUTE = HOST_URL + "event/";
+    private final String ACCOUNT_LOGIN_API_ROUTE = HOST_URL + "users/login";
+    private final String ACCOUNT_TOKEN_LOGIN_API_ROUTE = HOST_URL + "users/token-login";
+    private final String ACCOUNT_REGISTER_API_ROUTE = HOST_URL + "users/register";
+    private final String ACCOUNT_GET_USER_API_ROUTE = HOST_URL + "users";
+    private final String ACCOUNT_UPDATE_USER_API_ROUTE = HOST_URL + "users/update";
+    private final String ACCOUNT_REMOVE_USER_EVENT_API_ROUTE = HOST_URL + "users/remove-event";
+    private final String ACCOUNT_UPLOAD_IMAGE_API_ROUTE = HOST_URL + "users/upload-image";
+    private final String EVENT_MARK_USER_EVENT = HOST_URL + "users/mark-user-event";
+
     private final String WEATHERBIT_GET_FORECAST_16 = API_SCHEME + "api.weatherbit.io/v2.0/forecast/daily";
 
     // Header
@@ -33,6 +40,7 @@ public class AppConf {
     // App's filenames constants
     public static final String APP_SHARED_PREFERENCES_NAME = "com.example.eventlookup.access";
     public static final String TOKEN_KEY = "app_token";
+    public static final String USER_ID = "user_id";
 
     // Singleton class
     private static AppConf appConfInstance = null;
@@ -67,4 +75,14 @@ public class AppConf {
     public String getACCOUNT_TOKEN_LOGIN_API_ROUTE() { return ACCOUNT_TOKEN_LOGIN_API_ROUTE; }
 
     public String getACCOUNT_REGISTER_API_ROUTE() { return ACCOUNT_REGISTER_API_ROUTE; }
+
+    public String getACCOUNT_GET_USER_API_ROUTE() { return ACCOUNT_GET_USER_API_ROUTE; }
+
+    public String getACCOUNT_UPDATE_USER_API_ROUTE() { return ACCOUNT_UPDATE_USER_API_ROUTE; }
+
+    public String getACCOUNT_REMOVE_USER_EVENT_API_ROUTE() { return ACCOUNT_REMOVE_USER_EVENT_API_ROUTE; }
+
+    public String getACCOUNT_UPLOAD_IMAGE_API_ROUTE() { return ACCOUNT_UPLOAD_IMAGE_API_ROUTE; }
+
+    public String getEVENT_MARK_USER_EVENT() { return EVENT_MARK_USER_EVENT; }
 }

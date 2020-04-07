@@ -163,8 +163,10 @@ public class LoginFragment extends Fragment {
             public void apiCallSuccess(String body){
                 try{
                     JSONObject responseRoot = new JSONObject( body );
-                    String token = responseRoot.getString( "token" );
+                    String token = responseRoot.getString( "Token" );
+                    String id = responseRoot.getString( "Id" );
                     mUtils.writeAppTokenToSharedPreferences( getContext(), token );
+                    mUtils.writeUserIdToSharedPreferences( getContext(), id );
                     mNavController.navigate( R.id.action_action_account_to_accountOverviewFragment);
                 }
                 catch (JSONException e){
@@ -212,9 +214,9 @@ public class LoginFragment extends Fragment {
             public void apiCallSuccess(String body){
                 try{
                     JSONObject responseRoot = new JSONObject( body );
-                    Boolean successful = Boolean.parseBoolean( responseRoot.getString( "isSuccessful" ) );
-                    if(successful)
-                        mNavController.navigate( R.id.action_action_account_to_accountOverviewFragment);
+                    String id = responseRoot.getString( "Id" );
+                    mUtils.writeUserIdToSharedPreferences( getContext(), id );
+                    mNavController.navigate( R.id.action_action_account_to_accountOverviewFragment);
                 }
                 catch (JSONException e){
                     Log.e("OkHttp", "Error while parsing api/token-login response data - " + e.toString());

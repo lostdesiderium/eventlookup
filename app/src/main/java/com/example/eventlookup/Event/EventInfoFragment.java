@@ -1,6 +1,8 @@
 package com.example.eventlookup.Event;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,9 +11,12 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 import okhttp3.Cache;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,13 +24,18 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.eventlookup.Event.POJOs.UserEventPOJO;
 import com.example.eventlookup.Event.Adapters.ImageSliderPageAdapter;
 import com.example.eventlookup.Event.POJOs.EventFullPOJO;
 import com.example.eventlookup.R;
 import com.example.eventlookup.Shared.AppConf;
 import com.example.eventlookup.Shared.CacheInterceptor;
 import com.example.eventlookup.Shared.MainThreadOkHttpCallback;
+import com.example.eventlookup.Shared.Utils;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,17 +48,29 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class EventInfoFragment extends Fragment {
+    private final String TAG = "EventInfoFrag";
+    private final int INTERESTED = 0;
+    private final int GOING = 1;
 
+    // application classes
+    Utils mUtils;
+
+    // framework components
     private ViewPager2 imageViewPager;
-    private String _eventId;
     private OkHttpClient okHttpClient;
-    private ImageSliderPageAdapter sliderPageAdapter;
-    private Context _thisContext;
-    private View _thisView;
-
+    private MediaType mMediaType;
     private AlphaAnimation inAlphaAnimation;
     private AlphaAnimation outAlphaAnimation;
     private FrameLayout progressBarHolder;
+
+    // layout vars
+    private Context _thisContext;
+    private View _thisView;
+    private String _eventId;
+    private ImageSliderPageAdapter sliderPageAdapter;
+    private FloatingActionButton mFABLikeEvent;
+    private FloatingActionButton mFABLoveEvent;
+
 
     public EventInfoFragment() {
         // Required empty public constructor
@@ -56,12 +78,6 @@ public class EventInfoFragment extends Fragment {
 
     public EventInfoFragment(String eventId){
         this._eventId = eventId;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-
     }
 
     @Override
@@ -74,15 +90,35 @@ public class EventInfoFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated( view, savedInstanceState );
+
+        prepareLayoutComponents( view );
+        prepareListeners( view );
+
+        try{
+            progressBarHolder.setVisibility( View.VISIBLE );
+            getEventDetailedInfo();
+        }
+        catch (Exception e){
+            Log.e("OkHttp", "Error while trying to fetch data from api/event/{id}");
+        }
+    }
+
+    private void prepareLayoutComponents(View view){
         progressBarHolder = view.findViewById( R.id.FL_PB_holder_events_list );
 
         _thisContext = this.getContext();
         _thisView = view;
-
+        mFABLikeEvent = view.findViewById( R.id.FAB_event_info_like );
+        mFABLoveEvent = view.findViewById( R.id.FAB_event_info_heart );
+        mMediaType = MediaType.parse( AppConf.JsonMediaTypeString);
+        mUtils = new Utils();
         imageViewPager = view.findViewById( R.id.VP_event_overview_slider );
+
         sliderPageAdapter = new ImageSliderPageAdapter( _thisContext );
         imageViewPager.setAdapter( sliderPageAdapter);
+    }
 
+    private void prepareListeners(View view){
         imageViewPager.registerOnPageChangeCallback( new ViewPager2.OnPageChangeCallback(){
             @Override
             public void onPageSelected(int position) {
@@ -101,33 +137,23 @@ public class EventInfoFragment extends Fragment {
             }
         } );
 
-        try{
-            progressBarHolder.setVisibility( View.VISIBLE );
-            getEventDetailedInfo();
-        }
-        catch (Exception e){
-            Log.e("OkHttp", "Error while trying to fetch data from api/event/{id}");
-        }
+        mFABLikeEvent.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isUserLoggedIn())
+                    markUserEvent( INTERESTED );
+            }
+        } );
+        mFABLoveEvent.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isUserLoggedIn())
+                    markUserEvent( GOING );
+            }
+        } );
     }
 
-    public void bindDataToView(EventFullPOJO eventDetails){
-        TextView eventTitle = _thisView.findViewById( R.id.event_overview_title );
-        TextView eventLongDescr = _thisView.findViewById( R.id.event_overview_description );
-        TextView eventLocation = _thisView.findViewById( R.id.event_overview_location );
-        TextView eventDate = _thisView.findViewById( R.id.event_overview_date );
-        TextView eventInterestedPeopleCount = _thisView.findViewById( R.id.event_overview_interested_ppl_count );
-        TextView eventGoingPeopleCount = _thisView.findViewById( R.id.event_overview_going_ppl_count );
-
-        eventTitle.setText( eventDetails.getEventTitle() );
-        eventLongDescr.setText( eventDetails.getEventDescription() );
-        eventLocation.setText( eventDetails.getEventLocation() );
-        eventDate.setText( eventDetails.getFormattedEventDateFromString(eventDetails.getEventDate()) );
-        eventInterestedPeopleCount.setText( eventDetails.getInterestedPeopleCount() );
-        eventGoingPeopleCount.setText(eventDetails.getGoingPeopleCount());
-
-    }
-
-    /*
+    /*API CALL RESPONSE EXAMPLE
     * "Title": "\"Užsuk\" Restorano atidarymas",
       "ShortDescription": "\"Užsuk\" restoranas patogioje Vilniaus vietoje",
       "LongDescription": "Ne tik patogioje vietoje bet ir su super patraukliomis kainomis",
@@ -160,16 +186,15 @@ public class EventInfoFragment extends Fragment {
       ],
       "Tickets": []
     * */
-
     private void getEventDetailedInfo() throws Exception {
         File httpCacheDirectory = new File(getContext().getCacheDir(), "http-cache");
         int cacheSize = 10 * 1024 * 1024;
         Cache cache = new Cache( httpCacheDirectory, cacheSize );
 
-        okHttpClient = new OkHttpClient.Builder(  ).addNetworkInterceptor( new CacheInterceptor() )
-                .cache( cache )
-                .build();
-//        okHttpClient = new OkHttpClient(  );
+//        okHttpClient = new OkHttpClient.Builder(  ).addNetworkInterceptor( new CacheInterceptor() )
+//                .cache( cache )
+//                .build();
+        okHttpClient = new OkHttpClient(  );
 
         AppConf apiConf = AppConf.getInstance();
         String eventInfoRoute = apiConf.getEventGetEventDetailedApiRoute() + _eventId;
@@ -228,6 +253,21 @@ public class EventInfoFragment extends Fragment {
                             lng,
                             imagesUrls
                     );
+                    String currentUserId = mUtils.getUserId( _thisContext );
+                    if(!currentUserId.equals( "" )) {
+                        JSONArray markedEvents = response.getJSONArray( "UserEvents" );
+                        for (int i = 0; i < markedEvents.length(); i++) {
+                            JSONObject markedEvent = markedEvents.getJSONObject( i );
+                            String markedEventId = markedEvent.getString( "EventId" );
+                            String markedUserId = markedEvent.getString( "UserId" );
+                            if(markedEventId.equals( _eventId ) && markedUserId.equals( currentUserId ) ){
+                                if(markedEvent.getBoolean( "Interested" ))
+                                    changeIcon( INTERESTED );
+                                else if(markedEvent.getBoolean( "Going" ))
+                                    changeIcon( GOING );
+                            }
+                        }
+                    }
 
                     sliderPageAdapter = new ImageSliderPageAdapter( _thisContext, imagesUrls, _thisView );
                     imageViewPager.setAdapter( sliderPageAdapter);
@@ -249,4 +289,150 @@ public class EventInfoFragment extends Fragment {
 
     }
 
+    public void bindDataToView(EventFullPOJO eventDetails){
+        TextView eventTitle = _thisView.findViewById( R.id.event_overview_title );
+        TextView eventLongDescr = _thisView.findViewById( R.id.event_overview_description );
+        TextView eventLocation = _thisView.findViewById( R.id.event_overview_location );
+        TextView eventDate = _thisView.findViewById( R.id.event_overview_date );
+        TextView eventInterestedPeopleCount = _thisView.findViewById( R.id.event_overview_interested_ppl_count );
+        TextView eventGoingPeopleCount = _thisView.findViewById( R.id.event_overview_going_ppl_count );
+
+        eventTitle.setText( eventDetails.getEventTitle() );
+        eventLongDescr.setText( eventDetails.getEventDescription() );
+        eventLocation.setText( eventDetails.getEventLocation() );
+        eventDate.setText( eventDetails.getFormattedEventDateFromString(eventDetails.getEventDate()) );
+        eventInterestedPeopleCount.setText( eventDetails.getInterestedPeopleCount() );
+        eventGoingPeopleCount.setText(eventDetails.getGoingPeopleCount());
+
+    }
+
+    private String formJsonObjectForUserEvent(int action){
+        Gson gson = new Gson();
+
+        UserEventPOJO userEventPOJO = new UserEventPOJO(
+                false,
+                false,
+                false,
+                _eventId,
+                mUtils.getUserId( getContext() )
+        );
+
+        // if interested then not going and reverse
+        switch(action){
+            case GOING:
+                userEventPOJO.setGoing( true );
+                userEventPOJO.setInterested( false );
+                break;
+            case INTERESTED:
+                userEventPOJO.setInterested( true );
+                userEventPOJO.setGoing( false );
+                break;
+            default:
+                return "";
+        }
+
+        String jsonString = gson.toJson( userEventPOJO );
+
+        return jsonString;
+    }
+
+    /**
+     * API call to server to mark user event as interested or going
+     * @param action GOING or INTERESTED
+     */
+    private void markUserEvent(final int action){
+        okHttpClient = new OkHttpClient();
+
+        AppConf apiConf = AppConf.getInstance();
+        String markEventUrl = apiConf.getEVENT_MARK_USER_EVENT();
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(markEventUrl)
+                .newBuilder();
+
+        String url = urlBuilder.build()
+                .toString();
+
+        RequestBody body = RequestBody.create(formJsonObjectForUserEvent(action), mMediaType );
+
+        Request request = new Request.Builder(  )
+                .header("Authorization", "Bearer " + mUtils.getAppToken( getContext() ))
+                .url( url )
+                .post( body )
+                .build();
+
+        okHttpClient.newCall(request).enqueue( new MainThreadOkHttpCallback() {
+
+            @Override
+            public void apiCallSuccess(String body){
+                try{
+                    JSONObject responseRoot = new JSONObject( body );
+                    boolean isSuccess = responseRoot.getBoolean( "Success" );
+                    if(isSuccess)
+                        changeIcon(action);
+
+                }
+                catch (JSONException e){
+                    Log.e("OkHttp", "Error while parsing api/users/mark-user-event response data - " + e.toString());
+                }
+            }
+
+            @Override
+            public void apiCallFail(Exception e){
+                Log.e("OkHttp", "Api call http://<host>/api/users/mark-user-event failed; " + e.toString());
+            }
+
+        } );
+    }
+
+    private boolean isUserLoggedIn(){
+        String userId = mUtils.getUserId( _thisContext );
+        if(userId != "")
+            return true;
+
+        Toast.makeText( getContext(), "You must sign in first", Toast.LENGTH_LONG ).show();
+        return false;
+    }
+
+    /**
+     * Change icon to indicate change to user
+     * @param action GOING or INTERESTED
+     */
+    private void changeIcon(int action){
+        Drawable likeFillIcon = _thisContext.getResources().getDrawable( R.drawable.like_white_fill );
+        Drawable heartFillIcon = _thisContext.getResources().getDrawable( R.drawable.heart_white_fill );
+        Drawable heartOutlineIcon = _thisContext.getResources().getDrawable( R.drawable.heart_white );
+        Drawable likeOutlineIcon = _thisContext.getResources().getDrawable( R.drawable.like_white );
+        switch (action){
+            case INTERESTED:
+                mFABLoveEvent.setImageDrawable( heartOutlineIcon );
+                mFABLikeEvent.setImageDrawable( likeFillIcon );
+                break;
+            case GOING:
+                mFABLikeEvent.setImageDrawable( likeOutlineIcon );
+                mFABLoveEvent.setImageDrawable( heartFillIcon );
+                break;
+            default:
+        }
+
+        deactivateMarkButtonsForShortTime( 1000 ); // deactivating buttons for 1second for antispam to server
+    }
+
+    private void deactivateMarkButtonsForShortTime(int millis){
+        mFABLoveEvent.setClickable( false );
+        new Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        mFABLoveEvent.setClickable( true );
+                    }
+                },
+                millis);
+        mFABLikeEvent.setClickable( false );
+        new Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        mFABLikeEvent.setClickable( true );
+                    }
+                },
+                millis);
+    }
 }

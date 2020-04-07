@@ -141,11 +141,12 @@ public class RegisterFragment extends Fragment {
             public void apiCallSuccess(String body){
                 try{
                     JSONObject responseRoot = new JSONObject( body );
-                    String token = responseRoot.getString( "token" );
-                    if(! token.equals("") ) {
-                        mUtils.writeAppTokenToSharedPreferences( getContext(), token );
-                        mNavController.navigate( R.id.action_registerFragment_to_accountOverviewFragment );
-                    }
+                    String token = responseRoot.getString( "Token" );
+                    String id = responseRoot.getString( "Id" );
+                    mUtils.writeAppTokenToSharedPreferences( getContext(), token );
+                    mUtils.writeUserIdToSharedPreferences( getContext(), id );
+
+                    mNavController.navigate( R.id.action_registerFragment_to_accountOverviewFragment );
                 }
                 catch (JSONException e){
                     Log.e("OkHttp", "Error while parsing api/users/register response data - " + e.toString());

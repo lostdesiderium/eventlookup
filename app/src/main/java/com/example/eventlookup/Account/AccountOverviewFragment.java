@@ -18,7 +18,8 @@ import com.example.eventlookup.Account.Adapters.AccountOverviewAdapter;
 import com.example.eventlookup.R;
 
 
-public class AccountOverviewFragment extends Fragment {
+public class AccountOverviewFragment extends Fragment
+        implements com.example.eventlookup.Account.AccountOverviewInfoFragment.ViewPager2Navigation {
     private final String TAG = "AccountOverviewFragment";
     private final int FRAGMENTS_COUNT = 3;
 
@@ -47,6 +48,14 @@ public class AccountOverviewFragment extends Fragment {
         prepareListeners( view );
     }
 
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        if (fragment instanceof AccountOverviewInfoFragment) {
+            AccountOverviewInfoFragment accountOverviewInfoFragment = (AccountOverviewInfoFragment) fragment;
+            accountOverviewInfoFragment.setCallbackListener(this);
+        }
+    }
+
 
     private void prepareLayoutComponents(View view){
         mThisFrag = view;
@@ -63,5 +72,9 @@ public class AccountOverviewFragment extends Fragment {
 
     private void prepareListeners(View view){
 
+    }
+
+    public void navigateToFragmentInPosition(int position){
+        mViewPager2.setCurrentItem( position );
     }
 }
