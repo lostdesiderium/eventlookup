@@ -1,10 +1,10 @@
 package com.example.eventlookup.Account.Adapters;
 
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,10 +27,12 @@ public class AccountEventsListAdapter extends RecyclerView.Adapter<BaseViewHolde
     public static final String TAG = "EventAdapter";
     public static final int VIEW_TYPE_EMPTY = 0;
     public static final int VIEW_TYPE_NORMAL = 1;
+    public static final int VIEW_TYPE_FAILED = 2;
 
     private static AELACallback mCallback;
     protected View mParentView;
     public List<AccountEventPOJO> mEventsList;
+    public static boolean mFailedApiCall = false;
 
     // Interface for callback
     public interface AELACallback {
@@ -60,7 +62,9 @@ public class AccountEventsListAdapter extends RecyclerView.Adapter<BaseViewHolde
             case VIEW_TYPE_NORMAL:
                 return new ViewHolder( inflater.inflate( R.layout.account_overview_event_card, parent, false) );
             case VIEW_TYPE_EMPTY:
-                return new EmptyViewHolder( inflater.inflate( R.layout.account_overview_event_card, parent, false) );
+                return new EmptyViewHolder( inflater.inflate( R.layout.placeholder_no_marked_event, parent, false) );
+            case VIEW_TYPE_FAILED:
+                return new FailedApiViewHolder( inflater.inflate( R.layout.placeholder_unsuccessful_call, parent, false) );
             default:
                 return new EmptyViewHolder( inflater.inflate( R.layout.account_overview_event_card, parent, false) );
         }
@@ -76,6 +80,8 @@ public class AccountEventsListAdapter extends RecyclerView.Adapter<BaseViewHolde
         if(mEventsList != null && mEventsList.size() > 0){
             return VIEW_TYPE_NORMAL;
         }
+        else if(mFailedApiCall == true)
+            return VIEW_TYPE_FAILED;
         else{
             return VIEW_TYPE_EMPTY;
         }
@@ -89,6 +95,10 @@ public class AccountEventsListAdapter extends RecyclerView.Adapter<BaseViewHolde
         else{
             return 1; // return 1 indicating that list is empty
         }
+    }
+
+    public void setFailedApiCall(boolean value){
+        mFailedApiCall = value;
     }
 
     public class ViewHolder extends BaseViewHolder {
@@ -149,13 +159,40 @@ public class AccountEventsListAdapter extends RecyclerView.Adapter<BaseViewHolde
     }
 
     public class EmptyViewHolder extends BaseViewHolder{
-
-        public EmptyViewHolder(View view){
-            super(view);
+        public EmptyViewHolder(View itemView){
+            super(itemView);
         }
 
         @Override
-        protected void clear() {
+        protected void clear(){
+
+        }
+    }
+
+    public class FailedApiViewHolder extends BaseViewHolder{
+        @BindView( R.id.BTN_event_retry )
+        Button mBtnRetry;
+
+        public FailedApiViewHolder(View itemView){
+            super(itemView);
+            ButterKnife.bind( this, itemView );
+        }
+
+        @Override
+        public void onBind(int position) {
+            super.onBind( position );
+
+            mBtnRetry.setOnClickListener( new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(mCallback != null)
+                        mCallback.onEmptyViewRetryClick();
+                }
+            } );
+        }
+
+        @Override
+        protected void clear(){
 
         }
     }

@@ -37,9 +37,9 @@
     <string name="login_password">Password</string>
     <string name="login_password_hint">Type your password</string>
     <string name="login_action">Sign In</string>
-    <string name="login_action_sign_up"><u>Create account</u></string>
-    <string name="login_action_forgot_pw"><u>Forgot password</u></string>
-    <string name="register_action_sign_in"><u>Sign in</u></string>
+    <string name="login_action_sign_up"><u>Create account\u00A0</u></string>
+    <string name="login_action_forgot_pw"><u>Forgot password\u00A0</u></string>
+    <string name="register_action_sign_in"><u>Sign in</u>\u00A0</string>
     <string name="register_display_name">Display name</string>
     <string name="register_display_name_hint">Type your display name</string>
     <string name="register_action">Sign Up</string>
@@ -56,7 +56,9 @@
     <string name="account_overview_settings_logout">Logout</string>
     <string name="account_overview_events_interested">Interested</string>
     <string name="account_overview_events_going">Going</string>
+    <string name="account_overview_bio_placeholder_text">Write here some info about yourself</string>
+    <string name="account_event_no_events">Go and hit some hearts on events for them to appear here</string>
+    <string name="event_fail_placeholder_title">Something went wrong, try again</string>
+    <string name="event_btn_retry">Retry</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

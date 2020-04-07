@@ -211,12 +211,16 @@ public class AccountOverviewEventsFragment extends Fragment
 
                 }
                 catch (JSONException e){
+                    mProgressBarHolder.setVisibility( View.GONE );
+                    mEventAdapter.setFailedApiCall( true );
                     Log.e("OkHttp", TAG + " Error while parsing api/users/{id} response data - " + e.toString());
                 }
             }
 
             @Override
             public void apiCallFail(Exception e){
+                mProgressBarHolder.setVisibility( View.GONE );
+                mEventAdapter.setFailedApiCall( true );
                 Log.e("OkHttp", TAG + " Api call http://<host>/api/users/{id} failed; " + e.toString());
             }
 
@@ -241,7 +245,7 @@ public class AccountOverviewEventsFragment extends Fragment
     }
 
     public void onEmptyViewRetryClick(){
-
+        fetchUserData();
     }
 
     @Override

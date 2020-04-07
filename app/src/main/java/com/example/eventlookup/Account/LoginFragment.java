@@ -153,7 +153,7 @@ public class LoginFragment extends Fragment {
                     String id = responseRoot.getString( "Id" );
                     mUtils.writeAppTokenToSharedPreferences( getContext(), token );
                     mUtils.writeUserIdToSharedPreferences( getContext(), id );
-                    mNavController.navigate( R.id.action_action_account_to_accountOverviewFragment);
+                    mNavController.popBackStack(R.id.accountOverviewFragment, false);
                 }
                 catch (JSONException e){
                     Log.e("OkHttp", "Error while parsing api/login response data - " + e.toString());
@@ -184,7 +184,7 @@ public class LoginFragment extends Fragment {
                     JSONObject responseRoot = new JSONObject( body );
                     String id = responseRoot.getString( "Id" );
                     mUtils.writeUserIdToSharedPreferences( getContext(), id );
-                    mNavController.navigate( R.id.action_action_account_to_accountOverviewFragment);
+                    mNavController.popBackStack(R.id.accountOverviewFragment, false);
                 }
                 catch (JSONException e){
                     Log.e("OkHttp", "Error while parsing api/token-login response data - " + e.toString());

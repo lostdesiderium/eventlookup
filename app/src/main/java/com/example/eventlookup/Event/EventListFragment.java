@@ -50,7 +50,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
 
-public class EventListFragment extends Fragment {
+public class EventListFragment extends Fragment
+        implements com.example.eventlookup.Event.Adapters.EventAdapter.EventAdapterCallback {
     private final String TAG = "EventListFragment";
     private final int UPCOMING_EVENTS = 0;
     private final int FINISHED_EVENTS = 1;
@@ -95,9 +96,7 @@ public class EventListFragment extends Fragment {
         mThisFragmentView = view;
 
         bindViews( view );
-        progressBarHolder.setVisibility( View.VISIBLE );
         prepareListeners( view );
-
         setupRecyclerView();
     }
 
@@ -110,6 +109,7 @@ public class EventListFragment extends Fragment {
 
         eventAdapter = new EventAdapter(  );
         eventAdapter.addItems( eventsList );
+        eventAdapter.setCallback( this );
         recyclerView.setAdapter( eventAdapter );
 
         fetchDataForAdapter();
@@ -118,6 +118,7 @@ public class EventListFragment extends Fragment {
 
     private void fetchDataForAdapter(){
         try {
+            progressBarHolder.setVisibility( View.VISIBLE );
             getEventListFromApi();
         }
         catch (Exception e){
@@ -165,6 +166,7 @@ public class EventListFragment extends Fragment {
 
             @Override
             public void apiCallFail(Exception e){
+                progressBarHolder.setVisibility( View.GONE );
                 Log.e("OkHttp", "Api call http://<host>/api/event failed");
             }
 
@@ -298,4 +300,7 @@ public class EventListFragment extends Fragment {
     }
 
 
+    public void onEmptyViewRetryClick() {
+        fetchDataForAdapter();
+    }
 }

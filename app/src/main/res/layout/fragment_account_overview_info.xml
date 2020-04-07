@@ -54,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/account_image_content_description"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/event_img3" />
+                        android:src="@drawable/user_placeholder" />
 
                 </androidx.cardview.widget.CardView>
 

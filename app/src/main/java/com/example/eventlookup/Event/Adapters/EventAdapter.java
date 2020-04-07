@@ -17,6 +17,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -30,8 +31,19 @@ public class EventAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public static final int VIEW_TYPE_EMPTY = 0;
     public static final int VIEW_TYPE_NORMAL = 1;
 
-    private Callback callback;
     public List<EventListItemPOJO>  eventsList;
+
+    // Interface for callback
+    private EventAdapterCallback mCallback;
+    public interface EventAdapterCallback {
+        void onEmptyViewRetryClick();
+    }
+
+    public void setCallback(EventAdapterCallback callback)
+    {
+        this.mCallback = callback;
+    }
+    // Interface for callback
 
     public EventAdapter(){
 
@@ -41,11 +53,6 @@ public class EventAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         this.eventsList = eventsList;
     }
 
-    public void setCallback(Callback callback){
-        this.callback = callback;
-    }
-
-
     // ------------------ Overriding methods from default RecyclerView.Adapter but Adapter itself is handling their calls
     @NonNull
     @Override
@@ -54,7 +61,7 @@ public class EventAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             case VIEW_TYPE_NORMAL:
                 return new ViewHolder( LayoutInflater.from(parent.getContext()).inflate( R.layout.event_card_2, parent, false) );
             case VIEW_TYPE_EMPTY:
-                return new EmptyViewHolder( LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card_2, parent, false) );
+                return new EmptyViewHolder( LayoutInflater.from(parent.getContext()).inflate(R.layout.placeholder_unsuccessful_call, parent, false) );
             default:
                 return new EmptyViewHolder( LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card_2, parent, false) );
         }
@@ -91,11 +98,6 @@ public class EventAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         notifyDataSetChanged(); // Should be used as a last resort only because its not so efficient (notifyItemChanged for item change and notifyItemInserted for structural change
     }
 
-    // Interface for callback
-    public interface Callback {
-        void onEmptyViewRetryClick();
-    }
-    // Interface for callback
 
     public class ViewHolder extends BaseViewHolder{
 
@@ -169,9 +171,26 @@ public class EventAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public class EmptyViewHolder extends BaseViewHolder{
+        @BindView( R.id.BTN_event_retry )
+        Button mBtnRetry;
 
         public EmptyViewHolder(View itemView){
             super(itemView);
+            ButterKnife.bind( this, itemView );
+        }
+
+        @Override
+        public void onBind(int position) {
+            super.onBind( position );
+
+            if(mBtnRetry != null) {
+                mBtnRetry.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mCallback.onEmptyViewRetryClick();
+                    }
+                } );
+            }
         }
 
         @Override

@@ -156,10 +156,16 @@ public class AccountOverviewInfoFragment extends Fragment {
         mTVEmail.setText( accountInfo.getmEmail() );
         mTVInterestedCount.setText( accountInfo.getmUserInterestedEventsCount() + "" );
         mTVGoingCount.setText( accountInfo.getmUserGoingEventsCount() + "" );
-        mETBio.setText( accountInfo.getmBiography() );
-        Glide.with(mThisFrag)
-                .load( accountInfo.getmImagePath() )
-                .into( mAccountImage );
+        if(!accountInfo.getmBiography().equals( "null" ))
+            mETBio.setText( accountInfo.getmBiography() );
+        else
+            mETBio.setText(R.string.account_overview_bio_placeholder_text);
+        if(accountInfo.getmImagePath().contains( "png" ) || accountInfo.getmImagePath().contains( "jpg" )
+                || accountInfo.getmImagePath().contains( "gif" ) ) {
+            Glide.with( mThisFrag )
+                    .load( accountInfo.getmImagePath() )
+                    .into( mAccountImage );
+        }
     }
 
     private JSONObject formJsonObject(){

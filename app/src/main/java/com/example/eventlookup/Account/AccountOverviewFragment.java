@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.example.eventlookup.Account.Adapters.AccountOverviewAdapter;
 import com.example.eventlookup.R;
+import com.example.eventlookup.Shared.Utils;
 
 
 public class AccountOverviewFragment extends Fragment
@@ -27,6 +28,7 @@ public class AccountOverviewFragment extends Fragment
     private NavController mNavController;
     private View mThisFrag;
     private ViewPager2 mViewPager2;
+    private Utils mUtils;
 
     public AccountOverviewFragment() {
         // Required empty public constructor
@@ -45,6 +47,7 @@ public class AccountOverviewFragment extends Fragment
         super.onViewCreated( view, savedInstanceState );
 
         prepareLayoutComponents( view );
+        checkIfUserIsLoggedIn();
         prepareListeners( view );
     }
 
@@ -60,6 +63,7 @@ public class AccountOverviewFragment extends Fragment
     private void prepareLayoutComponents(View view){
         mThisFrag = view;
         mNavController = Navigation.findNavController(view);
+        mUtils = new Utils();
         setupViewPager2( view );
     }
 
@@ -76,5 +80,11 @@ public class AccountOverviewFragment extends Fragment
 
     public void navigateToFragmentInPosition(int position){
         mViewPager2.setCurrentItem( position );
+    }
+
+    private void checkIfUserIsLoggedIn(){
+        if(mUtils.getUserId( getContext() ).equals( "" )){
+            mNavController.navigate( R.id.action_accountOverviewFragment_to_action_account );
+        }
     }
 }

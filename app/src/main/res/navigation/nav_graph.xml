@@ -18,13 +18,8 @@
             app:popExitAnim="@anim/slide_out_right"
             />
         <action
-            android:id="@+id/action_eventListFragment_to_loginFragment"
-            app:destination="@id/action_account"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            />
+            android:id="@+id/action_action_events_to_accountOverviewFragment"
+            app:destination="@id/accountOverviewFragment" />
 
     </fragment>
 
@@ -86,16 +81,6 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             />
-        <action
-            android:id="@+id/action_action_account_to_accountOverviewFragment"
-            app:destination="@id/accountOverviewFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/action_account"
-            app:popUpToInclusive="true"
-            />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -109,16 +94,6 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            />
-        <action
-            android:id="@+id/action_registerFragment_to_accountOverviewFragment"
-            app:destination="@id/accountOverviewFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/registerFragment"
-            app:popUpToInclusive="true"
             />
     </fragment>
     <fragment
@@ -158,6 +133,9 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             />
+        <action
+            android:id="@+id/action_accountOverviewFragment_to_action_account"
+            app:destination="@id/action_account" />
     </fragment>
     <fragment
         android:id="@+id/accountOverviewInfoFragment2"

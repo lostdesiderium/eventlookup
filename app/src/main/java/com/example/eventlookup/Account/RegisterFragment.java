@@ -132,7 +132,7 @@ public class RegisterFragment extends Fragment {
                     mUtils.writeAppTokenToSharedPreferences( getContext(), token );
                     mUtils.writeUserIdToSharedPreferences( getContext(), id );
 
-                    mNavController.navigate( R.id.action_registerFragment_to_accountOverviewFragment );
+                    mNavController.popBackStack(R.id.accountOverviewFragment, false);
                 }
                 catch (JSONException e){
                     Log.e("OkHttp", "Error while parsing api/users/register response data - " + e.toString());
