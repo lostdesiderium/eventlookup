@@ -18,31 +18,37 @@
 
         android:layout_marginEnd="8dp"
         android:hint="@string/event_list_search_hint"
+        android:textColor="@color/colorDarkWhite"
+        android:textColorHint="@color/colorDarkWhite"
         app:layout_constraintEnd_toStartOf="@+id/IV_event_list_action_search"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/IV_event_list_action_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/IV_event_list_action_close"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_action_search"
+        app:srcCompat="@drawable/search_white"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
         android:background="#00FFFFFF"
         />
 
     <ImageButton
         android:id="@+id/IV_event_list_action_close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_action_close"
+        app:srcCompat="@drawable/close_white"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
         android:background="#00FFFFFF"
         />
 

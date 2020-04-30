@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.eventlookup"
+    package="com.app.eventlookup"
     android:targetSandboxVersion="1"
     >
 
@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".EntryActivity"
+            android:name="com.app.eventlookup.EntryActivity"
             android:windowSoftInputMode="stateHidden|adjustPan"
             >
             <intent-filter>

@@ -54,11 +54,17 @@
     <string name="account_overview_settings_change_password">Change password</string>
     <string name="account_overview_settings_notifications">Notifications</string>
     <string name="account_overview_settings_logout">Logout</string>
+    <string name="account_overview_settings_old_pw">Current Password</string>
+    <string name="account_overview_settings_new_pw">New Password</string>
+    <string name="account_overview_settings_repeat_new_pw">Repeat new Password</string>
     <string name="account_overview_events_interested">Interested</string>
     <string name="account_overview_events_going">Going</string>
     <string name="account_overview_bio_placeholder_text">Write here some info about yourself</string>
     <string name="account_event_no_events">Go and hit some hearts on events for them to appear here</string>
     <string name="event_fail_placeholder_title">Something went wrong, try again</string>
     <string name="event_btn_retry">Retry</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

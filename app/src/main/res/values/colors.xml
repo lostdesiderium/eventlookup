@@ -10,7 +10,10 @@
     <color name="colorAccentSoftRed">#f44336</color>
     <color name="colorComplementarySkyBlue">#36e7f4</color>
     <color name="colorGrey">#9c9596</color>
+    <color name="colorMediumGrey">#BDBDBD</color>
     <color name="colorLightGrey">#aabdbdbd</color>
     <color name="colorOpacityDarkWhite">#ddf2f2f2</color>
     <color name="colorOpacityLightBlack">#dd404040</color>
+    <color name="colorOpacityRed">#ddff002f</color>
+
 </resources>

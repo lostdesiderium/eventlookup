@@ -116,19 +116,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ET_register_password" />
 
-        <Button
-            android:id="@+id/BTN_register"
-            style="@style/ThemeButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/content_separation_margin"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/content_separation_margin"
-            android:text="@string/register_action"
-            android:textColor="@color/colorDarkWhite"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TV_register_action_login" />
+            <Button
+                android:id="@+id/BTN_register"
+                style="@style/ThemeButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/content_separation_margin"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="@dimen/content_separation_margin"
+                android:text="@string/register_action"
+                android:textColor="@color/colorDarkWhite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TV_register_action_login" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,7 +14,7 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <Button
-        android:id="@+id/BTN_account_settings_change_password"
+        android:id="@+id/BTN_account_overview_change_password"
         style="@style/ThemeButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

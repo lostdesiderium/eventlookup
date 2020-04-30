@@ -92,22 +92,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ET_login_password" />
 
-        <Button
-            android:id="@+id/BTN_login"
-            style="@style/ThemeButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/content_separation_margin"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/content_separation_margin"
-            android:text="@string/login_action"
-            android:textColor="@color/colorDarkWhite"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TV_login_action_forgot_pw" />
+                <Button
+                    android:id="@+id/BTN_login"
+                    style="@style/ThemeButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/content_separation_margin"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="@dimen/content_separation_margin"
+                    android:text="@string/login_action"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/TV_login_error_box" />
 
-        <TextView
+                <TextView
             android:id="@+id/TV_login_action_forgot_pw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -120,5 +119,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TV_login_action_register" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/TV_login_error_box"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="32dp"
+                    android:text="Error box"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/holo_red_light"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/TV_login_action_forgot_pw" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -7,13 +7,14 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     >
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_around"
         >
-
+        <include layout="@layout/frame_layout_loader"/>
         <!--    <include layout="@layout/frame_layout_loader"/>-->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -65,6 +66,7 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/register_display_name"
                     android:textSize="@dimen/big_title_size"
+                    android:textColor="@color/colorLightBlack"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cardView" />
@@ -77,6 +79,7 @@
                     android:text="name@email.com"
                     android:textAlignment="center"
                     android:textSize="@dimen/small_text_size"
+                    android:textColor="@color/colorLightBlack"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/TV_account_display_name" />
@@ -94,6 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="12"
+                    android:textColor="@color/colorLightBlack"
                     android:textSize="@dimen/supper_big_title_size"
                     app:layout_constraintEnd_toStartOf="@+id/guideline5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -106,6 +110,7 @@
                     android:layout_marginTop="48dp"
                     android:text="@string/account_overview_interested_events_text"
                     android:textSize="@dimen/normal_text_size"
+                    android:textColor="@color/colorLightBlack"
                     app:layout_constraintEnd_toStartOf="@+id/guideline5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/TV_account_overview_interested_count" />
@@ -116,6 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="33"
+                    android:textColor="@color/colorLightBlack"
                     android:textSize="@dimen/supper_big_title_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline5"
@@ -127,6 +133,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="48dp"
                     android:text="@string/account_overview_going_events_text"
+                    android:textColor="@color/colorLightBlack"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline5"
                     app:layout_constraintTop_toTopOf="@+id/TV_account_overview_going_count" />
@@ -181,6 +188,7 @@
                     android:text="@string/account_overview_bio_title"
                     android:textAlignment="center"
                     android:textSize="@dimen/big_title_size"
+                    android:textColor="@color/colorLightBlack"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -193,6 +201,7 @@
                     android:layout_marginStart="@dimen/content_separation_margin"
                     android:layout_marginEnd="@dimen/content_separation_margin"
                     android:text="Some bio about person"
+                    android:textColor="@color/colorLightBlack"
                     android:textAlignment="center"
                     android:textSize="@dimen/title_size"
                     app:layout_constraintTop_toBottomOf="@id/TV_account_overview_bio_title"

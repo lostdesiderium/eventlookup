@@ -25,7 +25,6 @@
         android:layout_marginStart="8dp"
         android:text="2020-03-03"
         android:textSize="@dimen/title_size"
-        android:textColor="@color/colorLightBlack"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -37,7 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="+13° C"
-        android:textColor="@color/colorLightBlack"
         android:textSize="@dimen/title_size"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/TV_event_weather_day_forecast_date"
@@ -60,7 +58,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Scattered clouds"
-        android:textColor="@color/colorLightBlack"
         android:textSize="@dimen/title_size"
         app:layout_constraintStart_toEndOf="@+id/TV_event_weather_day_forecast_value"
         app:layout_constraintTop_toTopOf="parent" />
@@ -72,7 +69,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="5.6 m/s south-southeast wind"
-        android:textColor="@color/colorLightBlack"
         android:textSize="@dimen/title_size"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/TV_event_weather_day_forecast_date" />
