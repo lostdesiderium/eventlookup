@@ -34,7 +34,7 @@ public class EventOverviewFragment extends Fragment {
      * TODO
      * Implement Tickets Screen
      */
-    private final int FRAGMENTS_COUNT = 3;
+    private final int FRAGMENTS_COUNT = 4;
 
     public EventOverviewFragment() {
         // Required empty public constructor
@@ -42,7 +42,7 @@ public class EventOverviewFragment extends Fragment {
         mTabLayoutLabels.add( "Overview" );
         mTabLayoutLabels.add("Directions");
         mTabLayoutLabels.add("Weather Forecasts");
-//        mTabLayoutLabels.add( "Tickets" );
+        mTabLayoutLabels.add( "Tickets" );
     }
 
     @Override

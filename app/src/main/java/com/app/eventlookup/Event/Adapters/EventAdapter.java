@@ -22,16 +22,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import com.app.eventlookup.Shared.Utils;
 import com.bumptech.glide.Glide;
 
 import androidx.navigation.NavController;
 
 public class EventAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public static final String TAG = "EventAdapter";
-    public static final int VIEW_TYPE_EMPTY = 0;
-    public static final int VIEW_TYPE_NORMAL = 1;
+    private static final int VIEW_TYPE_EMPTY = 0;
+    private static final int VIEW_TYPE_NORMAL = 1;
 
-    public List<EventListItemPOJO>  eventsList;
+    private List<EventListItemPOJO>  eventsList;
+    private Utils mUtils = new Utils();
 
     // Interface for callback
     private EventAdapterCallback mCallback;
@@ -116,6 +119,9 @@ public class EventAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @BindView( R.id.TV_event_date )
         TextView eventDate;
 
+        @BindView( R.id.TV_event_date_end )
+        TextView eventEndDate;
+
         private @Nullable
         NavController navController;
 
@@ -146,8 +152,12 @@ public class EventAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 eventLocation.setText( event.getEventLocation().toString() );
             }
             if(event.getEventDate() != null){
-                eventDate.setText( event.getFormattedEventDate() );
+                eventDate.setText( mUtils.getFormattedEventDateString( event.getEventDate() ) );
             }
+            if(event.getEventEndDate() != null){
+                eventEndDate.setText( mUtils.getFormattedEventDateString( event.getEventEndDate() ) );
+            }
+
 
             // Here goes item event listener
             itemView.setOnClickListener( new View.OnClickListener() {

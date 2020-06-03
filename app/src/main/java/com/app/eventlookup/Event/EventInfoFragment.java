@@ -68,7 +68,9 @@ public class EventInfoFragment extends Fragment {
     private FloatingActionButton mFABLikeEvent;
     private FloatingActionButton mFABLoveEvent;
     private boolean mIsEventMarked = false;
-    private int mLastMarkAction;
+    private boolean isGoing = false;
+    private boolean isInterested = false;
+    private boolean mUnmark = false;
     private TextView mEventInterestedPeopleCount;
     private TextView mEventGoingPeopleCount;
 
@@ -239,6 +241,7 @@ public class EventInfoFragment extends Fragment {
                             eventLongDesc,
                             (city + " " + street1 + ", " + country),
                             startDate,
+                            finishDate,
                             interestedPeopleCount,
                             goingPeopleCount,
                             daysEventActive,
@@ -256,12 +259,12 @@ public class EventInfoFragment extends Fragment {
                             if(markedEventId.equals( _eventId ) && markedUserId.equals( currentUserId ) ){
                                 if(markedEvent.getBoolean( "Interested" )) {
                                     mIsEventMarked = true;
-                                    mLastMarkAction = INTERESTED;
+                                    isInterested = true;
                                     changeIcon( INTERESTED );
                                 }
                                 else if(markedEvent.getBoolean( "Going" )) {
                                     mIsEventMarked = true;
-                                    mLastMarkAction = GOING;
+                                    isGoing = true;
                                     changeIcon( GOING );
                                 }
                             }
@@ -293,13 +296,15 @@ public class EventInfoFragment extends Fragment {
         TextView eventLongDescr = _thisView.findViewById( R.id.event_overview_description );
         TextView eventLocation = _thisView.findViewById( R.id.event_overview_location );
         TextView eventDate = _thisView.findViewById( R.id.event_overview_date );
+        TextView eventEndDate = _thisView.findViewById( R.id.event_overview_date_end );
         TextView eventInterestedPeopleCount = _thisView.findViewById( R.id.event_overview_interested_ppl_count );
         TextView eventGoingPeopleCount = _thisView.findViewById( R.id.event_overview_going_ppl_count );
 
         eventTitle.setText( eventDetails.getEventTitle() );
         eventLongDescr.setText( eventDetails.getEventDescription() );
         eventLocation.setText( eventDetails.getEventLocation() );
-        eventDate.setText( eventDetails.getFormattedEventDateFromString(eventDetails.getEventDate()) );
+        eventDate.setText( mUtils.getFormattedEventDateString(eventDetails.getEventDate()) );
+        eventEndDate.setText( mUtils.getFormattedEventDateString( eventDetails.getEventEndDate() ) );
         eventInterestedPeopleCount.setText( eventDetails.getInterestedPeopleCount() );
         eventGoingPeopleCount.setText(eventDetails.getGoingPeopleCount());
 
@@ -317,17 +322,26 @@ public class EventInfoFragment extends Fragment {
         );
 
         // if interested then not going and reverse
-        switch(action){
-            case GOING:
-                userEventPOJO.setGoing( true );
-                userEventPOJO.setInterested( false );
-                break;
-            case INTERESTED:
-                userEventPOJO.setInterested( true );
-                userEventPOJO.setGoing( false );
-                break;
-            default:
-                return "";
+        if(mUnmark){
+            userEventPOJO.setGoing( false );
+            userEventPOJO.setInterested( false );
+
+            mUnmark = false;
+        }
+        else {
+            switch (action) {
+                case GOING:
+                    userEventPOJO.setGoing( true );
+                    userEventPOJO.setInterested( false );
+                    break;
+                case INTERESTED:
+                    userEventPOJO.setInterested( true );
+                    userEventPOJO.setGoing( false );
+
+                    break;
+                default:
+                    return "";
+            }
         }
 
         String jsonString = gson.toJson( userEventPOJO );
@@ -340,6 +354,12 @@ public class EventInfoFragment extends Fragment {
      * @param action GOING or INTERESTED
      */
     private void markUserEvent(final int action){
+        final boolean sameMarked = checkIfSameMarked(action);
+        if(sameMarked) {
+            mUnmark = true;
+            isGoing = false;
+            isInterested = false;
+        }
         okHttpClient = apiRequest.generateOkHttpClient();
 
         AppConf apiConf = AppConf.getInstance();
@@ -355,8 +375,21 @@ public class EventInfoFragment extends Fragment {
                     JSONObject responseRoot = new JSONObject( body );
                     boolean isSuccess = responseRoot.getBoolean( "Success" );
                     if(isSuccess) {
-                        increaseLikesCounter( action );
-                        changeIcon( action );
+                        if(sameMarked){
+                            unmarkEventVisually( action );
+                        }
+                        else {
+                            increaseLikesCounter( action );
+                            changeIcon( action );
+                            if (action == GOING) {
+                                isGoing = true;
+                                isInterested = false;
+                            } else {
+                                isGoing = false;
+                                isInterested = true;
+                            }
+                        }
+
                     }
 
                 }
@@ -431,11 +464,10 @@ public class EventInfoFragment extends Fragment {
 
         switch (action){
             case INTERESTED:
-
                 count = Integer.parseInt( mEventInterestedPeopleCount.getText().toString() );
                 newCount = ++count + "";
                 mEventInterestedPeopleCount.setText( newCount );
-                if(mIsEventMarked){
+                if(isGoing){
                     decreaseLikesCounter( GOING );
                 }
                 break;
@@ -443,7 +475,7 @@ public class EventInfoFragment extends Fragment {
                 count = Integer.parseInt( mEventGoingPeopleCount.getText().toString() );
                 newCount = ++count + "";
                 mEventGoingPeopleCount.setText( newCount );
-                if(mIsEventMarked){
+                if(isInterested){
                     decreaseLikesCounter( INTERESTED );
                 }
                 break;
@@ -465,6 +497,38 @@ public class EventInfoFragment extends Fragment {
                 count = Integer.parseInt( mEventGoingPeopleCount.getText().toString() );
                 newCount = --count + "";
                 mEventGoingPeopleCount.setText( newCount );
+                break;
+            default:
+        }
+    }
+
+    private boolean checkIfSameMarked(int action){
+        switch (action){
+            case INTERESTED:
+                if(isInterested)
+                    return true;
+                break;
+            case GOING:
+                if(isGoing)
+                    return true;
+                break;
+            default:
+        }
+        return false;
+    }
+
+    private void unmarkEventVisually(int action){
+        Drawable heartOutlineIcon = _thisContext.getResources().getDrawable( R.drawable.heart_white );
+        Drawable likeOutlineIcon = _thisContext.getResources().getDrawable( R.drawable.like_white );
+
+        switch (action){
+            case INTERESTED:
+                mFABLikeEvent.setImageDrawable( likeOutlineIcon );
+                decreaseLikesCounter( action );
+                break;
+            case GOING:
+                mFABLoveEvent.setImageDrawable( heartOutlineIcon );
+                decreaseLikesCounter( action );
                 break;
             default:
         }

@@ -41,6 +41,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline6" />
 
     <Switch
+        android:visibility="gone"
         android:id="@+id/Sw_account_overview_settings_notifications"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

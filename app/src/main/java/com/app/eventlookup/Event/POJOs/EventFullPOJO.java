@@ -15,6 +15,7 @@ public class EventFullPOJO {
     private String EventDescription;
     private String EventLocation;
     private String EventDate;
+    private String EventEndDate;
     private String InterestedPeopleCount;
     private String GoingPeopleCount;
     private String DaysEventActive;
@@ -25,13 +26,14 @@ public class EventFullPOJO {
     private final String DISPLAY_FORMAT = "MMM dd HH:mm yyyy";
     private final String PARSE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
-    public EventFullPOJO(String id, String eventTitle, String eventDescription, String eventLocation, String eventDate,
+    public EventFullPOJO(String id, String eventTitle, String eventDescription, String eventLocation, String eventDate, String eventFinishDate,
                          String interestedPeopleCount, String goingPeopleCount, String daysEventActive, String lat, String lng, ArrayList<String> listImageUrl) {
         Id = id;
         EventTitle = eventTitle;
         EventDescription = eventDescription;
         EventLocation = eventLocation;
         EventDate = eventDate;
+        EventEndDate = eventFinishDate;
         InterestedPeopleCount = interestedPeopleCount;
         GoingPeopleCount = goingPeopleCount;
         DaysEventActive = daysEventActive;
@@ -128,18 +130,11 @@ public class EventFullPOJO {
         ListImageUrl = listImageUrl;
     }
 
-    public  String getFormattedEventDateFromString(String date){
-        SimpleDateFormat formatter = new SimpleDateFormat( PARSE_FORMAT );
+    public String getEventEndDate() {
+        return EventEndDate;
+    }
 
-        try{
-            Date formattedDate = formatter.parse( date );
-            String reformattedDate = new SimpleDateFormat( DISPLAY_FORMAT ).format( formattedDate );
-            return reformattedDate;
-        }
-        catch(ParseException e){
-            Log.e(TAG, e.toString());
-        }
-
-        return "";
+    public void setEventEndDate(String eventEndDate) {
+        EventEndDate = eventEndDate;
     }
 }

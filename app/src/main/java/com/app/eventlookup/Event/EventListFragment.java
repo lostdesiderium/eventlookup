@@ -1,10 +1,15 @@
 package com.app.eventlookup.Event;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -15,8 +20,10 @@ import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
 
 import com.app.eventlookup.Event.Adapters.EventAdapter;
 import com.app.eventlookup.Event.POJOs.EventListItemPOJO;
@@ -24,6 +31,7 @@ import com.app.eventlookup.R;
 import com.app.eventlookup.Shared.APIRequest;
 import com.app.eventlookup.Shared.AppConf;
 import com.app.eventlookup.Shared.MainThreadOkHttpCallback;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
@@ -72,6 +80,8 @@ public class EventListFragment extends Fragment
     private ImageButton mActionSearchClose;
     private ImageButton mActionSearchContent;
     private AutoCompleteTextView mACTVSearch;
+    private SeekBar mSeekBar;
+    private EditText mETKmRadius;
 
     public EventListFragment(){
         // Required empty constructor
@@ -121,8 +131,7 @@ public class EventListFragment extends Fragment
     }
 
     private void getEventListFromApi() throws Exception {
-        okHttpClient = apiRequest.getOkHttpClientObject( 5 );
-
+        okHttpClient = apiRequest.generateOkHttpClient();
         AppConf apiConf = AppConf.getInstance();
         String eventsListApiRoute = apiConf.getEventGetListApiRoute();
 
@@ -144,7 +153,10 @@ public class EventListFragment extends Fragment
                                 jObj.getString( "Title" ),
                                 jObj.getString( "ShortDescription" ),
                                 jObj.getString( "AddressCountryCityStreet1" ),
-                                jObj.getString( "StartDate" )
+                                jObj.getString( "StartDate" ),
+                                jObj.getString( "FinishDate" ),
+                                Float.parseFloat( jObj.getString("AddressLat") ),
+                                Float.parseFloat(jObj.getString("AddressLng") )
                         );
                         eventsList.add( eventListItemPOJO );
                         eventsTitles.add(eventListItemPOJO.getEventTitle());
@@ -179,6 +191,8 @@ public class EventListFragment extends Fragment
         mActionSearchContent = view.findViewById( R.id.IV_event_list_action_search );
         mACTVSearch = view.findViewById( R.id.ACTV_events_list_search );
         mTabLayout = view.findViewById( R.id.TBL_events_tab_layout );
+        mSeekBar = view.findViewById( R.id.SeekB_events_radius_seekbar );
+        mETKmRadius = view.findViewById( R.id.ET_events_radius );
         apiRequest = new APIRequest( getContext() );
     }
 
@@ -205,9 +219,7 @@ public class EventListFragment extends Fragment
         mActionSearchContent.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<EventListItemPOJO> filteredEvents = filterEventsByName( mACTVSearch.getText().toString() );
-                eventAdapter.addItems( filteredEvents );
-                recyclerView.setAdapter( eventAdapter );
+                filterEvents();
 
                 InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService( Context.INPUT_METHOD_SERVICE );
                 try {
@@ -247,6 +259,23 @@ public class EventListFragment extends Fragment
             }
         } );
 
+        mSeekBar.setMax( 200 );
+        mSeekBar.setOnSeekBarChangeListener( new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                mETKmRadius.setText( i + " KM");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        } );
     }
 
 
@@ -293,6 +322,49 @@ public class EventListFragment extends Fragment
         return filteredEvents;
     }
 
+    private ArrayList<EventListItemPOJO> filterEventByRadius(int radius){
+        if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    AppConf.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+
+        LocationManager mLocationManager = (LocationManager) getContext().getSystemService( Context.LOCATION_SERVICE );
+        Location currentLocation = mLocationManager.getLastKnownLocation( LocationManager.GPS_PROVIDER );
+        ArrayList<EventListItemPOJO> filteredEvents = new ArrayList<>(  );
+
+        for(EventListItemPOJO event : eventsList){
+            LatLng eventCoords = event.getCoordinatesLatLng();
+
+            float[] results = new float[1];
+            Location.distanceBetween(currentLocation.getLatitude(), currentLocation.getLongitude(),
+                    eventCoords.latitude, eventCoords.longitude, results);
+
+            float distanceBetweenInKM = results[0];
+            if((distanceBetweenInKM/1000) < radius){
+                filteredEvents.add( event );
+            }
+        }
+
+        return filteredEvents;
+    }
+
+    private void filterEvents() {
+        ArrayList<EventListItemPOJO> filteredEvents = new ArrayList<>();
+        if (!mACTVSearch.getText().toString().equals( "" )) {
+            filteredEvents = filterEventsByName( mACTVSearch.getText().toString() );
+        }
+        else if( mSeekBar.getProgress() != 0 ){
+            filteredEvents = filterEventByRadius(mSeekBar.getProgress());
+        }
+        else
+            return;
+
+        eventAdapter.addItems( filteredEvents );
+        recyclerView.setAdapter( eventAdapter );
+    }
 
     public void onEmptyViewRetryClick() {
         fetchDataForAdapter();

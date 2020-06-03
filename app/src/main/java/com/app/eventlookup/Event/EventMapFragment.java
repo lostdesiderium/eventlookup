@@ -80,6 +80,7 @@ public class EventMapFragment extends Fragment implements OnMapReadyCallback, Lo
 
     // Location
     private LocationManager mLocationManager;
+    private LocationListener mLocationListener;
     private boolean mLocationPermissionGranted = false;
     private double mCurrentUserLat = 0.0;
     private double mCurrentUserLng = 0.0;
@@ -179,7 +180,7 @@ public class EventMapFragment extends Fragment implements OnMapReadyCallback, Lo
         this.mCurrentUserLat = loc.getLatitude();
         this.mCurrentUserLng = loc.getLongitude();
         if (mLocationManager != null)
-            mLocationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, this );
+            mLocationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, mLocationListener );
 
     }
 
@@ -368,6 +369,36 @@ public class EventMapFragment extends Fragment implements OnMapReadyCallback, Lo
                 calculateDirections( differentSource );
             }
         } );
+
+        mLocationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(android.location.Location location) {
+                mCurrentUserLat = location.getLatitude();
+                mCurrentUserLng = location.getLongitude();
+                calculateDirections(getLocationCoordinatesFromLocationString());
+
+                List<LatLng> coords = new ArrayList<>();
+                coords.add( new LatLng( location.getLatitude(), location.getLongitude() ) );
+                coords.add( new LatLng( mEventLat, mEventLng ) );
+                zoomInCamera( coords, mMap );
+                mLocationManager.removeUpdates( mLocationListener );
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
     }
 
 

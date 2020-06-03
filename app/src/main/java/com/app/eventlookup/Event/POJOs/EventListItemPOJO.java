@@ -19,20 +19,24 @@ public class EventListItemPOJO {
     private String EventLocation;
     private LatLng CoordinatesLatLng;
     private String EventDate;
+    private String EventEndDate;
     private String FormattedEventDate;
     private Date EventDateClassDate;
 
     private final String DISPLAY_FORMAT = "MMM dd HH:mm yyyy";
     private final String PARSE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
-    public EventListItemPOJO(String id, String imageURL, String eventTitle, String eventShortDescription, String eventLocation, String eventDate) {
+    public EventListItemPOJO(String id, String imageURL, String eventTitle, String eventShortDescription, String eventLocation, String eventDate, String eventEndDate
+                            , float lat, float lng) {
         this.Id = id;
         this.ImageURL = imageURL;
         this.EventTitle = eventTitle;
         this.EventShortDescription = eventShortDescription;
         this.EventLocation = eventLocation;
         this.EventDate = eventDate;
+        this.EventEndDate = eventEndDate;
         this.FormattedEventDate = getFormattedEventDateString( eventDate );
+        this.CoordinatesLatLng = new LatLng( lat, lng );
     }
 
     public String getId() {
@@ -123,4 +127,11 @@ public class EventListItemPOJO {
         return FormattedEventDate;
     }
 
+    public String getEventEndDate() {
+        return EventEndDate;
+    }
+
+    public void setEventEndDate(String eventEndDate) {
+        EventEndDate = eventEndDate;
+    }
 }

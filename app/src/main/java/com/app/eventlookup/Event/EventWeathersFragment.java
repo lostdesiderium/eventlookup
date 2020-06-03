@@ -125,7 +125,7 @@ public class EventWeathersFragment extends Fragment {
     }
 
     private void getEventDetailedInfo() throws Exception {
-        okHttpClient = apiRequest.getOkHttpClientObject( 5 );
+        okHttpClient = apiRequest.generateOkHttpClient();
 
         AppConf apiConf = AppConf.getInstance();
         String eventInfoRoute = apiConf.getEventGetEventDetailedApiRoute() + _eventId;
