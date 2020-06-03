@@ -13,16 +13,14 @@
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:src="@drawable/events_background_2"
-        android:scaleType="fitXY" />
+        android:src="@drawable/carson_arias_7zzloemcauo_unsplash"
+        android:scaleType="centerCrop" />
 
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:src="@drawable/main_background_gradient"
         android:scaleType="fitXY" />
-
-
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"

@@ -13,36 +13,83 @@
 
     <AutoCompleteTextView
         android:id="@+id/ACTV_events_list_search"
-        android:layout_width="291dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
 
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:hint="@string/event_list_search_hint"
+        android:textColor="@color/colorDarkWhite"
+        android:textColorHint="@color/colorDarkWhite"
         app:layout_constraintEnd_toStartOf="@+id/IV_event_list_action_search"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/IV_event_list_action_search"
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/TV_radius_search_label"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/event_search_label_radius"
+        android:textSize="@dimen/small_text_size"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toStartOf="@+id/IV_event_list_action_search"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ACTV_events_list_search" />
+
+    <EditText
+        android:visibility="visible"
+        android:id="@+id/ET_events_radius"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="0 KM"
+        android:inputType="number"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/IV_event_list_action_search"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TV_radius_search_label" />
+
+    <SeekBar
+        android:visibility="visible"
+        android:id="@+id/SeekB_events_radius_seekbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/IV_event_list_action_search"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ET_events_radius" />
+
+    <ImageButton
+        android:id="@+id/IV_event_list_action_search"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/IV_event_list_action_close"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_action_search"
+        app:srcCompat="@drawable/search_white"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
         android:background="#00FFFFFF"
         />
 
     <ImageButton
         android:id="@+id/IV_event_list_action_close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_action_close"
+        app:srcCompat="@drawable/close_white"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
         android:background="#00FFFFFF"
         />
 

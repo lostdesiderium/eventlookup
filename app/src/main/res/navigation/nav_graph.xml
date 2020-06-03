@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/action_events"
-        android:name="com.example.eventlookup.Event.EventListFragment"
+        android:name="com.app.eventlookup.Event.EventListFragment"
         android:label="EventListFragment" >
         <action
             android:id="@+id/action_eventListFragment_to_eventOverviewFragment"
@@ -18,18 +18,14 @@
             app:popExitAnim="@anim/slide_out_right"
             />
         <action
-            android:id="@+id/action_eventListFragment_to_loginFragment"
-            app:destination="@id/action_account"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            />
+            android:id="@+id/action_action_events_to_accountOverviewFragment"
+            app:destination="@id/accountOverviewFragment" />
+
     </fragment>
 
     <fragment
         android:id="@+id/eventOverviewFragment"
-        android:name="com.example.eventlookup.Event.EventOverviewFragment"
+        android:name="com.app.eventlookup.Event.EventOverviewFragment"
         android:label="fragment_event_overview"
         tools:layout="@layout/fragment_event_overview" >
         <action
@@ -59,22 +55,22 @@
     </fragment>
     <fragment
         android:id="@+id/eventMapFragment"
-        android:name="com.example.eventlookup.Event.EventMapFragment"
+        android:name="com.app.eventlookup.Event.EventMapFragment"
         android:label="fragment_event_map"
         tools:layout="@layout/fragment_event_map" />
     <fragment
         android:id="@+id/eventWeathersFragment"
-        android:name="com.example.eventlookup.Event.EventWeathersFragment"
+        android:name="com.app.eventlookup.Event.EventWeathersFragment"
         android:label="fragment_event_weathers"
         tools:layout="@layout/fragment_event_weathers" />
     <fragment
         android:id="@+id/eventTicketsFragment"
-        android:name="com.example.eventlookup.Event.EventTicketsFragment"
+        android:name="com.app.eventlookup.Event.EventTicketsFragment"
         android:label="fragment_event_tickets"
         tools:layout="@layout/fragment_event_tickets" />
     <fragment
         android:id="@+id/action_account"
-        android:name="com.example.eventlookup.Account.LoginFragment"
+        android:name="com.app.eventlookup.Account.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -88,12 +84,85 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.eventlookup.Account.RegisterFragment"
+        android:name="com.app.eventlookup.Account.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_action_account"
+            app:destination="@id/action_account"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            />
+    </fragment>
     <fragment
         android:id="@+id/accountOverviewFragment"
-        android:name="com.example.eventlookup.Account.AccountOverviewFragment"
+        android:name="com.app.eventlookup.Account.AccountOverviewFragment"
         android:label="fragment_account_overview"
-        tools:layout="@layout/fragment_account_overview" />
+        tools:layout="@layout/fragment_account_overview" >
+        <action
+            android:id="@+id/action_accountOverviewFragment_to_accountOverviewInfoFragment2"
+            app:destination="@id/accountOverviewInfoFragment2"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            />
+        <action
+            android:id="@+id/action_accountOverviewFragment_to_accountOverviewSettingsFragment2"
+            app:destination="@id/accountOverviewSettingsFragment2"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_out_left"
+            app:popExitAnim="@anim/slide_in_right"
+            />
+        <action
+            android:id="@+id/action_accountOverviewFragment_to_accountOverviewEventsFragment3"
+            app:destination="@id/accountOverviewEventsFragment3"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            />
+        <action
+            android:id="@+id/action_accountOverviewFragment_to_eventOverviewFragment"
+            app:destination="@id/eventOverviewFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            />
+        <action
+            android:id="@+id/action_accountOverviewFragment_to_action_account"
+            app:destination="@id/action_account" />
+        <action
+            android:id="@+id/action_accountOverviewFragment_to_accountOverviewChangePassword"
+            app:destination="@id/accountOverviewChangePassword"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/accountOverviewInfoFragment2"
+        android:name="com.app.eventlookup.Account.AccountOverviewInfoFragment"
+        android:label="fragment_account_overview_info"
+        tools:layout="@layout/fragment_account_overview_info" />
+    <fragment
+        android:id="@+id/accountOverviewSettingsFragment2"
+        android:name="com.app.eventlookup.Account.AccountOverviewSettingsFragment"
+        android:label="fragment_account_overview_settings"
+        tools:layout="@layout/fragment_account_overview_settings" />
+    <fragment
+        android:id="@+id/accountOverviewEventsFragment3"
+        android:name="com.app.eventlookup.Account.AccountOverviewEventsFragment"
+        android:label="fragment_account_overview_events"
+        tools:layout="@layout/fragment_account_overview_events"/>
+    <fragment
+        android:id="@+id/accountOverviewChangePassword"
+        android:name="com.app.eventlookup.Account.AccountOverviewChangePassword"
+        android:label="fragment_account_overview_change_password"
+        tools:layout="@layout/fragment_account_overview_change_password" />
 </navigation>

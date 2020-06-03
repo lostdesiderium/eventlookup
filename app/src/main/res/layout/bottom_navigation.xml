@@ -9,5 +9,6 @@
     app:itemTextColor="@color/colorDarkWhite"
     app:itemIconTint="@drawable/bottom_nav_color_state"
     app:menu="@menu/bottom_navigation_menu"
+    android:background="@color/colorOpacityLightBlack"
     />
 

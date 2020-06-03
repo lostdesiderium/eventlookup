@@ -2,50 +2,43 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/RL_event_weather_row"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/content_separation_margin"
     android:layout_marginEnd="@dimen/content_separation_margin"
-    android:id="@+id/RL_event_weather_row"
+
     android:background="@drawable/bottom_border_red"
-    android:padding="@dimen/close_margin_from_view"
-    >
-
-    <TextView
-        android:id="@+id/TV_event_weather_day_forecast_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="May 23"
-        android:textColor="@color/colorLightBlack"
-        android:textSize="@dimen/title_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </TextView>
+    android:padding="@dimen/close_margin_from_view">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
+        android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_begin="68dp" />
+
+    <TextView
+        android:id="@+id/TV_event_weather_day_forecast_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="2020-03-03"
+        android:textSize="@dimen/title_size"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </TextView>
 
     <TextView
         android:id="@+id/TV_event_weather_day_forecast_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="+17°"
-        android:textColor="@color/colorLightBlack"
+        android:text="+13° C"
         android:textSize="@dimen/title_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/TV_event_weather_day_forecast_title"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/TV_event_weather_day_forecast_date"
         app:layout_constraintTop_toTopOf="parent">
 
     </TextView>
@@ -54,13 +47,31 @@
         android:id="@+id/IV_event_weather_day_forecast_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/TV_event_weather_day_forecast_title"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_today" />
+        app:srcCompat="@drawable/a02d" />
+
+    <TextView
+        android:id="@+id/TV_event_weather_day_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Scattered clouds"
+        android:textSize="@dimen/title_size"
+        app:layout_constraintStart_toEndOf="@+id/TV_event_weather_day_forecast_value"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/TV_event_weather_day_wind_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="5.6 m/s south-southeast wind"
+        android:textSize="@dimen/title_size"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/TV_event_weather_day_forecast_date" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

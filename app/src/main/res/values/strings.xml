@@ -15,10 +15,13 @@
     </string>
     <string name="event_location">Event location</string>
     <string name="event_date">Event date</string>
+    <string name="event_start_date">Start date - </string>
+    <string name="event_end_date">End date - </string>
     <string name="event_upcoming_events">Upcoming Events</string>
     <string name="event_finished_events">Finished events</string>
     <string name="event_directions">Directions</string>
     <string name="event_weathers">Weather forecast</string>
+    <string name="event_weather_wind_string">wind</string>
     <string name="event_ticket">Tickets</string>
     <string name="event_overview">Overview</string>
     <string name="event_directions_button_search">Show me</string>
@@ -26,10 +29,46 @@
     <string name="event_directions_et_address_dest">Destination</string>
     <string name="in_progress">This screen is underconstruction&#8230;</string>
     <string name="apologize">Sorry,</string>
+    <string name="no_weather_forecast">Forecasts are available up to 16 days, comeback later</string>
+    <string name="event_finished_no_forecast">This event already happened, no need to forecast</string>
     <string name="event_going_ppl_count">Going:</string>
     <string name="event_interested_ppl_count">Interested:</string>
     <string name="event_list_search_hint">Search for event by title</string>
+    <string name="login_email">Email</string>
+    <string name="login_email_hint">Type your email</string>
+    <string name="login_password">Password</string>
+    <string name="login_password_hint">Type your password</string>
+    <string name="login_action">Sign In</string>
+    <string name="login_action_sign_up"><u>Create account\u00A0</u></string>
+    <string name="login_action_forgot_pw"><u>Forgot password\u00A0</u></string>
+    <string name="register_action_sign_in"><u>Sign in</u>\u00A0</string>
+    <string name="register_display_name">Display name</string>
+    <string name="register_display_name_hint">Type your display name</string>
+    <string name="register_action">Sign Up</string>
+    <string name="account_image_content_description">Profile image</string>
+    <string name="account_events_activity_btn">Events Activity</string>
+    <string name="account_settings_btn">Settings</string>
+    <string name="account_overview_btn">Overview</string>
+    <string name="account_overview_btn_save">Save</string>
+    <string name="account_overview_interested_events_text">interested</string>
+    <string name="account_overview_going_events_text">going</string>
+    <string name="account_overview_bio_title">About</string>
+    <string name="account_overview_settings_change_password">Change password</string>
+    <string name="account_overview_settings_notifications">Notifications</string>
+    <string name="account_overview_settings_logout">Logout</string>
+    <string name="account_overview_settings_old_pw">Current Password</string>
+    <string name="account_overview_settings_new_pw">New Password</string>
+    <string name="account_overview_settings_repeat_new_pw">Repeat new Password</string>
+    <string name="account_overview_events_interested">Interested</string>
+    <string name="account_overview_events_going">Going</string>
+    <string name="account_overview_bio_placeholder_text">Write here some info about yourself</string>
+    <string name="account_event_no_events">Go and hit some hearts on events for them to appear here</string>
+    <string name="event_fail_placeholder_title">Something went wrong, try again</string>
+    <string name="event_btn_retry">Retry</string>
+    <string name="event_search_label_radius">Slide below or input a KM radius to filter events</string>
+    <string name="event_overview_ticket_buy_btn">Buy tickets</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

@@ -48,26 +48,36 @@
 
         <TextView
             android:id="@+id/event_overview_title"
-            android:layout_width="345dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_margin_from_parent"
+            android:layout_marginStart="28dp"
             android:layout_marginTop="@dimen/normal_text_view_height"
+            android:layout_marginEnd="28dp"
             android:text="@string/event_title"
             android:textColor="@color/colorLightBlack"
             android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/event_overview_description"
-            android:layout_width="349dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_margin_from_parent"
-            android:layout_marginTop="@dimen/normal_text_view_height"
-            android:text="@string/event_desc"
-            android:textColor="@color/colorLightBlack"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/NSV_event_long_desc"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_event_desc"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_overview_title" />
+            app:layout_constraintTop_toBottomOf="@+id/event_overview_title">
+
+            <TextView
+                android:id="@+id/event_overview_description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/event_desc"
+                android:textColor="@color/colorLightBlack" />
+        </androidx.core.widget.NestedScrollView>
 
         <TextView
             android:id="@+id/event_overview_location"
@@ -75,13 +85,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin_from_parent"
             android:layout_marginEnd="@dimen/default_margin_from_parent"
+            android:paddingEnd="2dp"
+            android:paddingStart="2dp"
             android:text="@string/event_location"
-            android:textAlignment="textEnd"
+            android:textAlignment="textStart"
             android:textColor="@color/colorLightBlack"
             android:textSize="12sp"
-            android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_overview_description" />
+            app:layout_constraintTop_toBottomOf="@+id/NSV_event_long_desc" />
 
         <TextView
             android:id="@+id/event_overview_date"
@@ -89,20 +100,36 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/close_margin_from_view"
             android:layout_marginEnd="@dimen/default_margin_from_parent"
+            android:paddingEnd="2dp"
+            android:paddingStart="2dp"
             android:text="@string/event_date"
-            android:textAlignment="textEnd"
+            android:textAlignment="textStart"
             android:textColor="@color/colorLightBlack"
             android:textSize="12sp"
-            android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/event_overview_location" />
+
+        <TextView
+            android:id="@+id/event_overview_date_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/close_margin_from_view"
+            android:layout_marginEnd="@dimen/default_margin_from_parent"
+            android:paddingEnd="2dp"
+            android:paddingStart="2dp"
+            android:text="@string/event_date"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorLightBlack"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/event_overview_date" />
 
         <TextView
             android:id="@+id/event_overview_interested_ppl_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="28dp"
             android:textAlignment="viewStart"
             android:textColor="@color/colorLightBlack"
             android:textStyle="bold"
@@ -116,30 +143,17 @@
             android:layout_marginStart="8dp"
             android:layout_marginBottom="28dp"
             android:textAlignment="viewStart"
-            android:textStyle="bold"
             android:textColor="@color/colorLightBlack"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView4" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:layout_gravity="end|bottom"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@android:drawable/btn_star"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="28dp"
             android:text="@string/event_interested_ppl_count"
             android:textColor="@color/colorLightBlack"
             app:layout_constraintBottom_toTopOf="@+id/textView4"
@@ -155,6 +169,45 @@
             android:textColor="@color/colorLightBlack"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/FAB_event_info_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="28dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/like_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_event_info" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical_event_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent="0.5"
+            android:orientation="vertical"
+            />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_horizontal_event_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.60" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/FAB_event_info_heart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="28dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/heart_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline_vertical_event_info" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

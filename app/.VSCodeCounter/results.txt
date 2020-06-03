@@ -1,0 +1,147 @@
+Date : 2020-04-28 10:04:19
+Directory : d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src
+Total : 91 files,  5615 codes, 426 comments, 1192 blanks, all 7233 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Java     |         36 |      3,483 |        418 |        910 |      4,811 |
+| XML      |         55 |      2,132 |          8 |        282 |      2,422 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                     | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                        |         91 |      5,615 |        426 |      1,192 |      7,233 |
+| androidTest                                                                                                                              |          1 |         15 |          6 |          7 |         28 |
+| androidTest\java                                                                                                                         |          1 |         15 |          6 |          7 |         28 |
+| androidTest\java\com                                                                                                                     |          1 |         15 |          6 |          7 |         28 |
+| androidTest\java\com\example                                                                                                             |          1 |         15 |          6 |          7 |         28 |
+| androidTest\java\com\example\eventlookup                                                                                                 |          1 |         15 |          6 |          7 |         28 |
+| main                                                                                                                                     |         89 |      5,591 |        415 |      1,182 |      7,188 |
+| main\java                                                                                                                                |         34 |      3,459 |        407 |        900 |      4,766 |
+| main\java\com                                                                                                                            |         34 |      3,459 |        407 |        900 |      4,766 |
+| main\java\com\example                                                                                                                    |         34 |      3,459 |        407 |        900 |      4,766 |
+| main\java\com\example\eventlookup                                                                                                        |         34 |      3,459 |        407 |        900 |      4,766 |
+| main\java\com\example\eventlookup\Account                                                                                                |         11 |      1,114 |        243 |        267 |      1,624 |
+| main\java\com\example\eventlookup\Account\Adapters                                                                                       |          2 |        200 |          3 |         48 |        251 |
+| main\java\com\example\eventlookup\Account\POJOs                                                                                          |          3 |        110 |          0 |         34 |        144 |
+| main\java\com\example\eventlookup\Event                                                                                                  |         14 |      1,960 |        121 |        503 |      2,584 |
+| main\java\com\example\eventlookup\Event\Adapters                                                                                         |          3 |        294 |          9 |         87 |        390 |
+| main\java\com\example\eventlookup\Event\POJOs                                                                                            |          4 |        317 |          0 |         92 |        409 |
+| main\java\com\example\eventlookup\Shared                                                                                                 |          8 |        261 |         35 |        105 |        401 |
+| main\res                                                                                                                                 |         54 |      2,094 |          8 |        273 |      2,375 |
+| main\res\anim                                                                                                                            |          6 |         38 |          0 |          0 |         38 |
+| main\res\drawable                                                                                                                        |         12 |        287 |          0 |         25 |        312 |
+| main\res\drawable-anydpi                                                                                                                 |          1 |         11 |          0 |          1 |         12 |
+| main\res\font                                                                                                                            |          2 |         36 |          0 |          0 |         36 |
+| main\res\layout                                                                                                                          |         27 |      1,440 |          3 |        233 |      1,676 |
+| main\res\menu                                                                                                                            |          1 |          9 |          3 |          1 |         13 |
+| main\res\navigation                                                                                                                      |          1 |        152 |          0 |          3 |        155 |
+| main\res\values                                                                                                                          |          4 |        121 |          2 |         10 |        133 |
+| test                                                                                                                                     |          1 |          9 |          5 |          3 |         17 |
+| test\java                                                                                                                                |          1 |          9 |          5 |          3 |         17 |
+| test\java\com                                                                                                                            |          1 |          9 |          5 |          3 |         17 |
+| test\java\com\example                                                                                                                    |          1 |          9 |          5 |          3 |         17 |
+| test\java\com\example\eventlookup                                                                                                        |          1 |          9 |          5 |          3 |         17 |
++------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                                                 | language | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\androidTest\java\com\example\eventlookup\ExampleInstrumentedTest.java            | Java     |         15 |          6 |          7 |         28 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\AndroidManifest.xml                                                         | XML      |         38 |          0 |          9 |         47 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Account\AccountOverviewEventsFragment.java     | Java     |        233 |          5 |         52 |        290 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Account\AccountOverviewFragment.java           | Java     |         66 |          3 |         22 |         91 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Account\AccountOverviewInfoFragment.java       | Java     |        159 |        219 |         27 |        405 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Account\AccountOverviewSettingsFragment.java   | Java     |         52 |          5 |         19 |         76 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Account\Adapters\AccountEventsListAdapter.java | Java     |        159 |          3 |         38 |        200 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Account\Adapters\AccountOverviewAdapter.java   | Java     |         41 |          0 |         10 |         51 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Account\LoginFragment.java                     | Java     |        173 |          5 |         38 |        216 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Account\POJOs\AccountEventPOJO.java            | Java     |         45 |          0 |         14 |         59 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Account\POJOs\AccountOverviewInfoPOJO.java     | Java     |         62 |          0 |         17 |         79 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Account\POJOs\UserPOJO.java                    | Java     |          3 |          0 |          3 |          6 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Account\RegisterFragment.java                  | Java     |        121 |          3 |         27 |        151 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\EntryActivity.java                             | Java     |        124 |          8 |         25 |        157 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Event\Adapters\EventAdapter.java               | Java     |        155 |          5 |         44 |        204 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Event\Adapters\EventOverviewAdapter.java       | Java     |         42 |          0 |          8 |         50 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Event\Adapters\ImageSliderPageAdapter.java     | Java     |         97 |          4 |         35 |        136 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Event\EventInfoFragment.java                   | Java     |        364 |         50 |         67 |        481 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Event\EventListFragment.java                   | Java     |        231 |         16 |         60 |        307 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Event\EventMapFragment.java                    | Java     |        385 |         28 |         86 |        499 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Event\EventOverviewFragment.java               | Java     |         52 |          5 |         19 |         76 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Event\EventTicketsFragment.java                | Java     |         40 |          5 |         15 |         60 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Event\EventWeathersFragment.java               | Java     |        247 |          8 |         67 |        322 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Event\POJOs\EventFullPOJO.java                 | Java     |        114 |          0 |         32 |        146 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Event\POJOs\EventListItemPOJO.java             | Java     |        103 |          0 |         29 |        132 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Event\POJOs\EventWeatherPOJO.java              | Java     |         55 |          0 |         18 |         73 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Event\POJOs\UserEventPOJO.java                 | Java     |         45 |          0 |         13 |         58 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Event\PolylineData.java                        | Java     |         30 |          0 |         10 |         40 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Shared\APIRequest.java                         | Java     |         48 |         18 |         19 |         85 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Shared\AppConf.java                            | Java     |         55 |         11 |         27 |         93 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Shared\BaseViewHolder.java                     | Java     |         17 |          0 |         11 |         28 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Shared\CacheInterceptor.java                   | Java     |         22 |          0 |         11 |         33 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Shared\CustomMapView.java                      | Java     |         18 |          3 |          7 |         28 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Shared\GlideForApp.java                        | Java     |          6 |          3 |          5 |         14 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Shared\MainThreadOkHttpCallback.java           | Java     |         37 |          0 |         11 |         48 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\java\com\example\eventlookup\Shared\Utils.java                              | Java     |         58 |          0 |         14 |         72 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\anim\fade_in.xml                                                        | XML      |          7 |          0 |          0 |          7 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\anim\fade_out.xml                                                       | XML      |          7 |          0 |          0 |          7 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\anim\slide_in_left.xml                                                  | XML      |          6 |          0 |          0 |          6 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\anim\slide_in_right.xml                                                 | XML      |          6 |          0 |          0 |          6 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\anim\slide_out_left.xml                                                 | XML      |          6 |          0 |          0 |          6 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\anim\slide_out_right.xml                                                | XML      |          6 |          0 |          0 |          6 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\drawable-anydpi\ic_action_search.xml                                    | XML      |         11 |          0 |          1 |         12 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\drawable\bottom_border_red.xml                                          | XML      |          9 |          0 |          0 |          9 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\drawable\bottom_nav_color_state.xml                                     | XML      |          5 |          0 |          0 |          5 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\drawable\event_card_background_gradient.xml                             | XML      |         11 |          0 |          1 |         12 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\drawable\event_overview_gradient.xml                                    | XML      |         10 |          0 |          2 |         12 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\drawable\ic_action_close.xml                                            | XML      |          5 |          0 |          1 |          6 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\drawable\ic_launcher_background.xml                                     | XML      |        170 |          0 |          1 |        171 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\drawable\main_background_gradient.xml                                   | XML      |          8 |          0 |          1 |          9 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\drawable\oval_active.xml                                                | XML      |         19 |          0 |          6 |         25 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\drawable\oval_inactive.xml                                              | XML      |         15 |          0 |          5 |         20 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\drawable\theme_action_button_active.xml                                 | XML      |         14 |          0 |          4 |         18 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\drawable\theme_action_button_inactive.xml                               | XML      |         14 |          0 |          4 |         18 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\drawable\theme_button.xml                                               | XML      |          7 |          0 |          0 |          7 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\font\jaldi.xml                                                          | XML      |         13 |          0 |          0 |         13 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\font\markazi_text.xml                                                   | XML      |         23 |          0 |          0 |         23 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\account_overview_event_card.xml                                  | XML      |         64 |          0 |          9 |         73 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\activity_entry.xml                                               | XML      |         32 |          0 |          5 |         37 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\background.xml                                                   | XML      |         14 |          0 |          5 |         19 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\bottom_nav_bar_height_filler.xml                                 | XML      |          6 |          0 |          1 |          7 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\bottom_navigation.xml                                            | XML      |         13 |          0 |          2 |         15 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\event_card_2.xml                                                 | XML      |         81 |          0 |         12 |         93 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\event_slider_item.xml                                            | XML      |         14 |          0 |          3 |         17 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\event_weather_row.xml                                            | XML      |         66 |          0 |         11 |         77 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\forecast_not_available.xml                                       | XML      |         36 |          0 |          3 |         39 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\fragment_account_overview.xml                                    | XML      |         18 |          0 |          4 |         22 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\fragment_account_overview_events.xml                             | XML      |         40 |          0 |         11 |         51 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\fragment_account_overview_info.xml                               | XML      |        191 |          1 |         23 |        215 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\fragment_account_overview_settings.xml                           | XML      |         50 |          0 |          6 |         56 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\fragment_event_info.xml                                          | XML      |        159 |          0 |         24 |        183 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\fragment_event_list.xml                                          | XML      |         54 |          0 |         14 |         68 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\fragment_event_map.xml                                           | XML      |         63 |          0 |         14 |         77 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\fragment_event_overview.xml                                      | XML      |         44 |          0 |         14 |         58 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\fragment_event_tickets.xml                                       | XML      |         45 |          0 |          6 |         51 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\fragment_event_weathers.xml                                      | XML      |         14 |          0 |          2 |         16 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\fragment_login.xml                                               | XML      |        125 |          1 |         13 |        139 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\fragment_register.xml                                            | XML      |        121 |          1 |         13 |        135 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\frame_layout_loader.xml                                          | XML      |         17 |          0 |          1 |         18 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\indicator_active.xml                                             | XML      |          9 |          0 |          2 |         11 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\placeholder_no_marked_event.xml                                  | XML      |         41 |          0 |          9 |         50 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\placeholder_unsuccessful_call.xml                                | XML      |         51 |          0 |         10 |         61 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\search_layout.xml                                                | XML      |         49 |          0 |          9 |         58 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\layout\slider_indicator.xml                                             | XML      |         23 |          0 |          7 |         30 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\menu\bottom_navigation_menu.xml                                         | XML      |          9 |          3 |          1 |         13 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\navigation\nav_graph.xml                                                | XML      |        152 |          0 |          3 |        155 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\values\colors.xml                                                       | XML      |         17 |          0 |          1 |         18 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\values\dimens.xml                                                       | XML      |         17 |          0 |          0 |         17 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\values\strings.xml                                                      | XML      |         61 |          0 |          4 |         65 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\main\res\values\styles.xml                                                       | XML      |         26 |          2 |          5 |         33 |
+| d:\MOKSLAI KTU\4 kursas\II semestras\Bakalauras\app\src\test\java\com\example\eventlookup\ExampleUnitTest.java                           | Java     |          9 |          5 |          3 |         17 |
+| Total                                                                                                                                    |          |      5,615 |        426 |      1,192 |      7,233 |
++------------------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
